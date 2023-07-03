@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0391b4ce31fa32d41a02f4e5cca631b0
+  m_SerializeEntries:
+  - m_GUID: 124b112f221bc0e43a363d6dac81675f
+    m_Address: Assets/Modules/Game/Data/Runtime/Assets/SceneRefs/SceneRef_MainMenu.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd1b40b5164be0a458ae2797ce8c254f
+    m_Address: Assets/Modules/Game/Data/Runtime/Assets/SceneRefs/SceneRef_Global.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 79dcb9b09102c574ead30c465754fde3
+    m_Address: Assets/Modules/Game/Data/Runtime/Assets/SceneRefs/SceneRef_EntryPoint.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 778c2b6c523d3ab438a783a405e521a6
+    m_Address: Assets/Modules/Game/Data/Runtime/Assets/SceneRefs/SceneRef_Game.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: acfa17347738c4e42b401feb5094f71e
+    m_Address: Assets/Modules/Game/Data/Runtime/Scenes/Scene_Global.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 61b9207a8afd5f34a8153a6946f9b2c9
+    m_Address: Assets/Modules/Game/Data/Runtime/Scenes/Scene_Game.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7670735b7b6a05d4ab9f2378a09e9c17
+    m_Address: Assets/Modules/Game/Data/Runtime/Scenes/Scene_MainMenu.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4a3e44601db2d6b48a9add285836ab52, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 0a7adef890222a34089a8c316dd7a65f, type: 2}
+    - {fileID: 11400000, guid: f60669bbf943dac4f906412f54cfbec2, type: 2}
