@@ -9,7 +9,6 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Scene
         [SerializeField]
         private SceneAsset _sceneAsset;
 
-
         public string ScenePath => AssetDatabase.GetAssetPath(_sceneAsset);
 
         public GUID SceneGUID => AssetDatabase.GUIDFromAssetPath(ScenePath);

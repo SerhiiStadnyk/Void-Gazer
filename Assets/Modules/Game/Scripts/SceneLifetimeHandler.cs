@@ -1,6 +1,4 @@
-using Modules.MutatronicCore.Scripts.Runtime;
 using Modules.MutatronicCore.Scripts.Runtime.Scene;
-using UnityEngine;
 using Zenject;
 
 namespace Modules.Game.Scripts
@@ -10,7 +8,6 @@ namespace Modules.Game.Scripts
         [Inject]
         public override void InjectDependencies(DiContainer container)
         {
-
         }
     }
 }
