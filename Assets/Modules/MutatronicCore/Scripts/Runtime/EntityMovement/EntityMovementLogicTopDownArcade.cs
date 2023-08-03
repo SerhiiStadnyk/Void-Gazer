@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Modules.Game.Scripts.EntityMovement
+namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 {
     public class EntityMovementLogicTopDownArcade: IMovementLogic
     {

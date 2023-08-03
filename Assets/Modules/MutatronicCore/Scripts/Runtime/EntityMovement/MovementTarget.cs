@@ -1,4 +1,4 @@
-namespace Modules.Game.Scripts.EntityMovement
+namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 {
     public abstract class MovementTarget<T>
     {

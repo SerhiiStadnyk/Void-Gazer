@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using Modules.MutatronicCore.Scripts.Runtime;
 using Modules.MutatronicCore.Submodules.GameCondition;
 using UnityEngine;
 
-namespace Modules.Game.Scripts.EntityMovement
+namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 {
     public class EntityMovementComponent : MutatronicBehaviour
     {
@@ -12,10 +10,10 @@ namespace Modules.Game.Scripts.EntityMovement
         private List<GameCondition> _moveBlockerGameCondition;
 
         [SerializeField]
-        private MovementLogicFactory _movementLogicFactory;
+        private FactoryBase<IMovementLogic> _movementLogicFactory;
 
         [SerializeField]
-        private MovementLogicPointer _movementLogicPointer;
+        private FactoryPointer _factoryPointer;
 
         private IMovementLogic _movementLogic;
 
@@ -40,7 +38,7 @@ namespace Modules.Game.Scripts.EntityMovement
 
         protected void Awake()
         {
-            _movementLogic = new EntityMovementLogicTopDownArcade();
+            _movementLogic = _movementLogicFactory.GetObject(_factoryPointer);
             _movementLogic.Init(this);
         }
 
@@ -88,13 +86,15 @@ namespace Modules.Game.Scripts.EntityMovement
         }
 
 
-        public void SetMovementLogic(MovementLogicPointer pointer)
+        public void SetMovementLogic(FactoryPointer pointer)
         {
             if (_movementLogic != null)
             {
                 _movementLogic.Stop();
                 _movementLogic.Dispose();
             }
+
+            _movementLogic = _movementLogicFactory.GetObject(pointer);
         }
     }
 }

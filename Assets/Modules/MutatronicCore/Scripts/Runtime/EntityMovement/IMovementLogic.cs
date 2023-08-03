@@ -1,6 +1,6 @@
 using System;
 
-namespace Modules.Game.Scripts.EntityMovement
+namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 {
     public interface IMovementLogic: IDisposable
     {

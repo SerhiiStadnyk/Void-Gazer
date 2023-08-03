@@ -1,9 +1,8 @@
-using Modules.MutatronicCore.Scripts.Runtime;
 using Modules.MutatronicCore.Submodules.InputActions.Scripts;
 using UnityEngine;
 using Zenject;
 
-namespace Modules.Game.Scripts.EntityMovement
+namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 {
     [RequireComponent(typeof(EntityMovementComponent))]
     public class EntityMovementInputController : MutatronicBehaviour

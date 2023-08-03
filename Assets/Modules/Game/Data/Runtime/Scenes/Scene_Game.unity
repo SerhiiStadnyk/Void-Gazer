@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveBlockerGameCondition: []
+  _movementLogicFactory: {fileID: 11400000, guid: d5ccf16099bfea244b485a9866a049d5, type: 2}
+  _factoryPointer: {fileID: 11400000, guid: c5f1fa3673fb5b24aafcdcd3015973c6, type: 2}
 --- !u!4 &142971194
 Transform:
   m_ObjectHideFlags: 0
