@@ -7,9 +7,8 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
     [RequireComponent(typeof(EntityMovementComponent))]
     public class EntityMovementInputController : MutatronicBehaviour
     {
+        [SerializeField]
         private EntityMovementComponent _entityMovementComponent;
-
-        private InputActionsHandler _inputActionsHandler;
 
         [SerializeField]
         private InputAction _moveForwardInputAction;
@@ -41,6 +40,9 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
         [SerializeField]
         private InputAction _rotateDownInputAction;
 
+        private InputActionsHandler _inputActionsHandler;
+        private MovementTarget _movementTarget;
+
 
         [Inject]
         private void Inject(InputActionsHandler inputActionsHandler)
@@ -51,7 +53,7 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 
         protected void Awake()
         {
-            _entityMovementComponent = GetComponent<EntityMovementComponent>();
+            _movementTarget = new MovementTarget();
         }
 
 
@@ -87,61 +89,71 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 
         private void MoveRight()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.MoveRight);
+            _movementTarget.TargetDirection = Vector3.right;
+            _entityMovementComponent.MoveTo(_movementTarget);
         }
 
 
         private void MoveLeft()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.MoveLeft);
+            _movementTarget.TargetDirection = Vector3.left;
+            _entityMovementComponent.MoveTo(_movementTarget);
         }
 
 
         private void MoveForward()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.MoveForward);
+            _movementTarget.TargetDirection = Vector3.forward;
+            _entityMovementComponent.MoveTo(_movementTarget);
         }
 
 
         private void MoveBackwards()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.MoveBackwards);
+            _movementTarget.TargetDirection = Vector3.back;
+            _entityMovementComponent.MoveTo(_movementTarget);
         }
 
 
         private void MoveUp()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.MoveUp);
+            _movementTarget.TargetDirection = Vector3.up;
+            _entityMovementComponent.MoveTo(_movementTarget);
         }
 
 
         private void MoveDown()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.MoveDown);
+            _movementTarget.TargetDirection = Vector3.down;
+            _entityMovementComponent.MoveTo(_movementTarget);
         }
 
 
         private void RotateRight()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.RotateRight);
+            _movementTarget.TargetDirection = Vector3.right;
+            _entityMovementComponent.RotateTo(_movementTarget);
         }
 
 
         private void RotateLeft()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.RotateLeft);
+            _movementTarget.TargetDirection = Vector3.left;
+            _entityMovementComponent.RotateTo(_movementTarget);
         }
 
 
         private void RotateUp()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.RotateUp);
+            _movementTarget.TargetDirection = Vector3.up;
+            _entityMovementComponent.RotateTo(_movementTarget);
         }
 
 
         private void RotateDown()
         {
-            _entityMovementComponent.MoveInDirection(EntityMovementComponent.MovementType.RotateDown);
+            _movementTarget.TargetDirection = Vector3.down;
+            _entityMovementComponent.RotateTo(_movementTarget);
         }
     }
 }

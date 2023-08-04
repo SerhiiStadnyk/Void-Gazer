@@ -1,15 +1,18 @@
+using UnityEngine;
+
 namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 {
-    public abstract class MovementTarget<T>
+    public struct MovementTarget
     {
-        public T Target => _target;
+        public Vector3 TargetDirection { get; set; }
 
-        private T _target;
+        public Transform TargetTransform { get; set; }
 
 
-        protected MovementTarget(T target)
+        public MovementTarget(Vector3 targetDirection, Transform targetTransform)
         {
-            _target = target;
+            TargetDirection = targetDirection;
+            TargetTransform = targetTransform;
         }
     }
 }

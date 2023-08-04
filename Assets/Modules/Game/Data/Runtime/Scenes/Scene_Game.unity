@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55b2ddc1365b28439b69c7abf9e0e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _entityMovementComponent: {fileID: 142971193}
   _moveForwardInputAction: {fileID: 11400000, guid: 853124dcf2c76284d92a4ad3a682565e, type: 2}
   _moveBackwardInputAction: {fileID: 11400000, guid: 175bd0eacaa7f49488b16f3d36c14b89, type: 2}
   _moveLeftInputAction: {fileID: 11400000, guid: 8b126d486c425e24ab9b58afa39abe8d, type: 2}
@@ -433,14 +434,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061736862}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 363574741}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &2061736866
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
 
         protected void Awake()
         {
-            _movementLogic = _movementLogicFactory.GetObject(_factoryPointer);
+            SetMovementLogic(_factoryPointer);
             _movementLogic.Init(this);
         }
 
@@ -62,15 +62,15 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
         }
 
 
-        public void MoveInDirection(MovementType movementType)
+        public void RotateTo(MovementTarget target)
         {
-            _movementLogic.MoveInDirection(movementType);
+            _movementLogic.RotateTo(target);
         }
 
 
-        public void MoveToTarget<T>(MovementTarget<T> target)
+        public void MoveTo(MovementTarget target)
         {
-            _movementLogic.MoveToTarget<T>();
+            _movementLogic.MoveTo(target);
         }
 
 

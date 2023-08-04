@@ -16,28 +16,17 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
         }
 
 
-        void IMovementLogic.MoveInDirection(EntityMovementComponent.MovementType moveType)
+        void IMovementLogic.MoveTo(MovementTarget target)
         {
-            switch (moveType)
-            {
-                case EntityMovementComponent.MovementType.RotateRight:
-                    _entityTransform.Rotate(Vector3.forward, -100 * Time.deltaTime);
-                    break;
-                case EntityMovementComponent.MovementType.RotateLeft:
-                    _entityTransform.Rotate(Vector3.forward, 100 * Time.deltaTime);
-                    break;
-                case EntityMovementComponent.MovementType.MoveForward:
-                    _entityTransform.position += _entityTransform.up.normalized * 10 * Time.deltaTime;
-                    break;
-                case EntityMovementComponent.MovementType.MoveBackwards:
-                    _entityTransform.position -= _entityTransform.up.normalized * 10 * Time.deltaTime;
-                    break;
-            }
+            Vector3 foo = _entityTransform.forward.normalized * target.TargetDirection.z;
+            _entityTransform.position += foo * 10 * Time.deltaTime;
         }
 
 
-        void IMovementLogic.MoveToTarget<T>()
+        void IMovementLogic.RotateTo(MovementTarget target)
         {
+            Vector3 foo = new Vector3(0, target.TargetDirection.x, 0);
+            _entityTransform.Rotate(foo, 100 * Time.deltaTime);
         }
 
 

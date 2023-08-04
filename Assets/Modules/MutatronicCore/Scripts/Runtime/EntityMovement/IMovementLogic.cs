@@ -6,9 +6,9 @@ namespace Modules.MutatronicCore.Scripts.Runtime.EntityMovement
     {
         //TODO: Add default and limit values for speed and acceleration
 
-        public void MoveInDirection(EntityMovementComponent.MovementType moveType);
+        public void MoveTo(MovementTarget target);
 
-        public void MoveToTarget<T>();
+        public void RotateTo(MovementTarget target);
 
         public void Stop();
 
