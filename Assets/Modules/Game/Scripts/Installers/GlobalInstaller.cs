@@ -1,3 +1,5 @@
+using Modules.MutatronicCore.Scripts.Runtime;
+using Modules.MutatronicCore.Scripts.Runtime.Forms;
 using Modules.MutatronicCore.Scripts.Runtime.Scene;
 using Modules.MutatronicCore.Submodules.InputActions.Scripts;
 using UnityEngine;
@@ -15,6 +17,7 @@ namespace Modules.Game.Scripts.Installers
         {
             Container.Bind<SceneHandler>().FromInstance(_sceneHandler).AsSingle();
             Container.Bind<InputActionsHandler>().AsSingle();
+            Container.Bind<FormObjectReferenceInstantiator>().AsSingle();
         }
     }
 }
