@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e35ca1f30105d4289af806a00c00b6, type: 3}
   m_Name: ActorForm_Player
   m_EditorClassIdentifier: 
-  _viewPrefab: {fileID: 5877775981340824495, guid: 0ecc6a8f085a31749af689f9b12689fe, type: 3}
   _formName: Player
+  _viewPrefab: {fileID: 5877775981340824495, guid: 0ecc6a8f085a31749af689f9b12689fe, type: 3}
+  _modelPrefab: {fileID: 5877775981340824495, guid: 1d6c67afd90c9244c9956065fddfacf9, type: 3}
+  _compPrefab: {fileID: 2937917281543402527, guid: 73c302dbf6fbc6b408753fada69c98b8, type: 3}
+  _modelName: Model

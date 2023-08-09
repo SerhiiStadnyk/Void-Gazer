@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39c212b23176f5b4a939742687b50089, type: 3}
-  m_Name: ItemForm_Ore_B
+  m_Name: ItemForm_OreA
   m_EditorClassIdentifier: 
-  _viewPrefab: {fileID: 5877775981340824495, guid: ec84e66ea3585cc498e47360d0108da9, type: 3}
-  _formName: Ore_B
+  _formName: OreA
+  _viewPrefab: {fileID: 5877775981340824495, guid: 5c4e34e369c46a345bf9d310355a4826, type: 3}
+  _modelPrefab: {fileID: 3521090909963693212, guid: a4375e9d5e1aa69449d6bec281dfa115, type: 3}
+  _compPrefab: {fileID: 0}
+  _modelName: Model

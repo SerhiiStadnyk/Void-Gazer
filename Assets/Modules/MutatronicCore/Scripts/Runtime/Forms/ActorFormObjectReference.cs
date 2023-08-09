@@ -1,5 +1,4 @@
 using Modules.MutatronicCore.Scripts.Runtime.Inventory;
-using UnityEngine;
 
 namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 {
@@ -10,7 +9,7 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
         public InventoryBase Inventory => _inventory;
 
 
-        protected void Awake()
+        protected override void AwakeInternal()
         {
             _inventory = GetComponent<InventoryBase>();
         }

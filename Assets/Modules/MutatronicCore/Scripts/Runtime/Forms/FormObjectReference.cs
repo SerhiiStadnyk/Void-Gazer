@@ -1,5 +1,5 @@
 using JetBrains.Annotations;
-using Unity.Collections;
+using Modules.MutatronicCore.Scripts.Attributes;
 using UnityEngine;
 using Zenject;
 
@@ -7,8 +7,13 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 {
     public abstract partial class FormObjectReference<T> : MutatronicBehaviour, IFormObjectReference where T: Form
     {
-        [ReadOnly]
-        protected GameObject view;
+        [ReadOnlyField]
+        [SerializeField]
+        private GameObject _view;
+
+        [ReadOnlyField]
+        [SerializeField]
+        private GameObject _model;
 
         [SerializeField]
         protected Form _form;
@@ -29,6 +34,16 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
         }
 
 
+        protected void Awake()
+        {
+            SetupParts();
+            AwakeInternal();
+        }
+
+
+        protected virtual void AwakeInternal() { }
+
+
         /// <summary>
         /// Should be called only once on instantiating.
         /// </summary>
@@ -42,6 +57,57 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
             else
             {
                 Debug.LogError("SetForm should be called only once on instantiating");
+            }
+        }
+
+
+        private void SetupParts()
+        {
+            DestroyParts();
+            CreateParts();
+            HideParts();
+        }
+
+
+        private void DestroyParts()
+        {
+            if (_view != null)
+            {
+                Destroy(_view);
+                _view = null;
+                _model = null;
+            }
+        }
+
+
+        private void CreateParts()
+        {
+            if (_form != null)
+            {
+                if (_view == null)
+                {
+                    _view = Instantiate(_form.ViewPrefab, transform.localPosition, Quaternion.identity, transform);
+                }
+
+                if (_model == null)
+                {
+                    _model = Instantiate(_form.ModelPrefab, transform.localPosition, Quaternion.identity, _view.transform);
+                    _model.name = _form.ModelName;
+                }
+            }
+        }
+
+
+        private void HideParts()
+        {
+            if (_view != null && _view.hideFlags != HideFlags.HideAndDontSave)
+            {
+                _view.hideFlags = HideFlags.HideAndDontSave;
+            }
+
+            if (_model != null && _model.hideFlags != HideFlags.HideAndDontSave)
+            {
+                _model.hideFlags = HideFlags.HideAndDontSave;
             }
         }
     }
