@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: -7715591813453317993}
   - component: {fileID: -4808441593213726526}
   - component: {fileID: -2648586471567077632}
-  - component: {fileID: 4641694371992846808}
-  - component: {fileID: 2937917281543402526}
-  - component: {fileID: 2937917281543402524}
+  - component: {fileID: 5934020407610184156}
   - component: {fileID: 9004470377242049769}
   - component: {fileID: 4809448502585014735}
+  - component: {fileID: 4999467867968882042}
+  - component: {fileID: 8031366154902091727}
   m_Layer: 0
   m_Name: ActorForm_Player
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actorRef: {fileID: -7715591813453317993}
---- !u!114 &4641694371992846808
+--- !u!114 &5934020407610184156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,65 +87,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2937917281543402527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b05a96480588734b8976b847571a678, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputActionPairs:
-  - _inputAction: {fileID: 11400000, guid: 9583f1ca133fe6040a8c8b671df9da84, type: 2}
-    _unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: -2648586471567077632}
-          m_TargetAssemblyTypeName: Modules.MutatronicCore.Scripts.Runtime.ItemCollectorBase,
-            Assembly-CSharp
-          m_MethodName: CollectItem
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &2937917281543402526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2937917281543402527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a8297017d21d944ea4b7a1801d8da61, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cc17405b6980674cb9d75bff7bc96bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _moveBlockerGameCondition: []
   _movementLogicFactory: {fileID: 11400000, guid: d5ccf16099bfea244b485a9866a049d5, type: 2}
   _factoryPointer: {fileID: 11400000, guid: c5f1fa3673fb5b24aafcdcd3015973c6, type: 2}
---- !u!114 &2937917281543402524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2937917281543402527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f55b2ddc1365b28439b69c7abf9e0e1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _entityMovementComponent: {fileID: 2937917281543402526}
-  _moveForwardInputAction: {fileID: 11400000, guid: 853124dcf2c76284d92a4ad3a682565e, type: 2}
-  _moveBackwardInputAction: {fileID: 11400000, guid: 175bd0eacaa7f49488b16f3d36c14b89, type: 2}
-  _moveLeftInputAction: {fileID: 11400000, guid: 8b126d486c425e24ab9b58afa39abe8d, type: 2}
-  _moveRightInputAction: {fileID: 11400000, guid: 71c19f10b57e0bd4685e12e3f9d541dc, type: 2}
-  _moveUpInputAction: {fileID: 11400000, guid: e5b44dcb5a3851f48b7745a80af6bac1, type: 2}
-  _moveDownInputAction: {fileID: 11400000, guid: f5b06c53706a72643b813d7d26aec8e0, type: 2}
-  _rotateRightInputAction: {fileID: 11400000, guid: fc9e237fd8e40c2418c3737d43ecb56f, type: 2}
-  _rotateLeftInputAction: {fileID: 11400000, guid: 2d8e3c77d2919664d94f0f3b6aa940b1, type: 2}
-  _rotateUpInputAction: {fileID: 11400000, guid: 71253f2ff2d4cb343a416793a9d9b68b, type: 2}
-  _rotateDownInputAction: {fileID: 11400000, guid: d686defd3ba4d264d961b50787b8916a, type: 2}
 --- !u!65 &9004470377242049769
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -175,6 +122,121 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4999467867968882042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2937917281543402527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1314d8be436a641b5b714259cf407b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputActionEvents:
+  - _inputAction: {fileID: 11400000, guid: 9583f1ca133fe6040a8c8b671df9da84, type: 2}
+    _unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: -2648586471567077632}
+          m_TargetAssemblyTypeName: Modules.MutatronicCore.Scripts.Runtime.ItemCollectorBase,
+            Assembly-CSharp
+          m_MethodName: CollectItem
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &8031366154902091727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2937917281543402527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a63f80c5269a544a6708fd8103a5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputActionVector3Events:
+  - _inputAction: {fileID: 11400000, guid: 853124dcf2c76284d92a4ad3a682565e, type: 2}
+    _value: {x: 0, y: 0, z: 1}
+    _unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5934020407610184156}
+          m_TargetAssemblyTypeName: Modules.MutatronicCore.Scripts.Runtime.FormRefMovement.FormObjectRefMovementVector3,
+            Assembly-CSharp
+          m_MethodName: MoveTo
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - _inputAction: {fileID: 11400000, guid: 175bd0eacaa7f49488b16f3d36c14b89, type: 2}
+    _value: {x: 0, y: 0, z: -1}
+    _unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5934020407610184156}
+          m_TargetAssemblyTypeName: Modules.MutatronicCore.Scripts.Runtime.FormRefMovement.FormObjectRefMovementVector3,
+            Assembly-CSharp
+          m_MethodName: MoveTo
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - _inputAction: {fileID: 11400000, guid: 2d8e3c77d2919664d94f0f3b6aa940b1, type: 2}
+    _value: {x: -1, y: 0, z: 0}
+    _unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5934020407610184156}
+          m_TargetAssemblyTypeName: Modules.MutatronicCore.Scripts.Runtime.FormRefMovement.FormObjectRefMovementComponentBase`1[[UnityEngine.Vector3,
+            UnityEngine
+          m_MethodName: RotateTo
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - _inputAction: {fileID: 11400000, guid: fc9e237fd8e40c2418c3737d43ecb56f, type: 2}
+    _value: {x: 1, y: 0, z: 0}
+    _unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5934020407610184156}
+          m_TargetAssemblyTypeName: Modules.MutatronicCore.Scripts.Runtime.FormRefMovement.FormObjectRefMovementComponentBase`1[[UnityEngine.Vector3,
+            UnityEngine
+          m_MethodName: RotateTo
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2937917282058106030
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +248,6 @@ GameObject:
   - component: {fileID: 2937917282058106029}
   - component: {fileID: 2937917282058106026}
   - component: {fileID: 2937917282058106027}
-  - component: {fileID: 2937917282058106028}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -259,16 +320,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2937917282058106028
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2937917282058106030}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

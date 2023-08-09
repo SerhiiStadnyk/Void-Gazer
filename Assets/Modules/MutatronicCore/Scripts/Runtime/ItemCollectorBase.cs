@@ -14,10 +14,8 @@ namespace Modules.MutatronicCore.Scripts.Runtime
 
         public void CollectItem()
         {
-            Debug.LogWarning("Collect 1");
             if (_proximityItemRefs.Count > 0)
             {
-                Debug.LogWarning("Collect 2");
                 _proximityItemRefs[0].CollectItem(_actorRef.Inventory);
             }
         }

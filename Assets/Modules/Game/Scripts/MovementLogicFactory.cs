@@ -1,23 +1,23 @@
 using Modules.MutatronicCore.Scripts.Runtime;
-using Modules.MutatronicCore.Scripts.Runtime.EntityMovement;
+using Modules.MutatronicCore.Scripts.Runtime.FormRefMovement;
 using UnityEngine;
 
 namespace Modules.Game.Scripts
 {
     [CreateAssetMenu(fileName = "FactoryPointer.asset", menuName = "Mutatronic/Runtime/Factories/Create Movement Logic Factory")]
-    public class MovementLogicFactory : FactoryBase<IMovementLogic>
+    public class MovementLogicFactory : FactoryBase<IFormObjectRefMovementLogic<Vector3>>
     {
         [SerializeField]
         private FactoryPointer _movementLogicTopDownArcadePointer;
 
 
-        public override IMovementLogic GetObject(FactoryPointer pointer)
+        public override IFormObjectRefMovementLogic<Vector3> GetObject(FactoryPointer pointer)
         {
-            IMovementLogic result = null;
+            IFormObjectRefMovementLogic<Vector3> result = null;
 
             if (pointer == _movementLogicTopDownArcadePointer)
             {
-                result = new EntityMovementLogicTopDownArcade();
+                result = new FormObjectRefMovementLogicTopDownArcade();
             }
 
             return result;

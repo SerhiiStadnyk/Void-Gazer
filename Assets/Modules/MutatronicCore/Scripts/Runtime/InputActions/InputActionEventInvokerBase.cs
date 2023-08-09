@@ -2,15 +2,13 @@ using System;
 using System.Collections.Generic;
 using Modules.MutatronicCore.Submodules.InputActions.Scripts;
 using UnityEngine;
-using UnityEngine.Events;
 using Zenject;
 
-namespace Modules.MutatronicCore.Scripts.Runtime
+namespace Modules.MutatronicCore.Scripts.Runtime.InputActions
 {
-    public class InputActionInvoker : MutatronicBehaviour
+    public abstract class InputActionEventInvokerBase : MutatronicBehaviour
     {
-        [SerializeField]
-        private List<InputActionPair> _inputActionPairs;
+        protected abstract List<InputActionEventPairBase> InputActionEvents { get; }
 
         private InputActionsHandler _inputActionsHandler;
 
@@ -24,7 +22,7 @@ namespace Modules.MutatronicCore.Scripts.Runtime
 
         protected void OnEnable()
         {
-            foreach (InputActionPair pair in _inputActionPairs)
+            foreach (InputActionEventPairBase pair in InputActionEvents)
             {
                 _inputActionsHandler.Subscribe(pair.PairAction, pair.InputAction);
             }
@@ -33,25 +31,21 @@ namespace Modules.MutatronicCore.Scripts.Runtime
 
         protected void OnDisable()
         {
-            foreach (InputActionPair pair in _inputActionPairs)
+            foreach (InputActionEventPairBase pair in InputActionEvents)
             {
                 _inputActionsHandler.Unsubscribe(pair.PairAction, pair.InputAction);
             }
         }
 
 
-        [Serializable]
-        private class InputActionPair
+        protected abstract class InputActionEventPairBase
         {
             [SerializeField]
             private InputAction _inputAction;
 
-            [SerializeField]
-            private UnityEvent _unityEvent;
-
             public InputAction InputAction => _inputAction;
 
-            public Action PairAction => _unityEvent.Invoke;
+            public abstract Action PairAction { get; }
         }
     }
 }
