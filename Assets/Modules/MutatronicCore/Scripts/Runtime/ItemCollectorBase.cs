@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Modules.MutatronicCore.Scripts.Runtime.Forms;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Modules.MutatronicCore.Scripts.Runtime
 
         public void CollectItem()
         {
+            _proximityItemRefs = _proximityItemRefs.Where(bar => bar != null).ToList();
             if (_proximityItemRefs.Count > 0)
             {
                 _proximityItemRefs[0].CollectItem(_actorRef.Inventory);

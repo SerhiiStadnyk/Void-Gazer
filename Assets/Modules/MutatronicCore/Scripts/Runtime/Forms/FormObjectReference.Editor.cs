@@ -38,7 +38,6 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 
         private void SetupPartsEditor()
         {
-            Debug.LogError("SetupPartsEditor");
             DestroyPartsEditor();
             CreateParts();
             HideParts();
