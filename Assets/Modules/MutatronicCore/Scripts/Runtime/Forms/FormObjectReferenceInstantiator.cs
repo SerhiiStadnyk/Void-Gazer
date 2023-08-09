@@ -86,9 +86,9 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
         }
 
 
-        private void SetupFormRef(Form form, IFormObjectReference formRef)
+        public void SetupFormRef(Form form, IFormObjectReference formRef)
         {
-            formRef.SetForm(form);
+            formRef.SetForm(form, this);
         }
     }
 }

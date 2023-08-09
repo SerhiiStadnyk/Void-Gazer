@@ -6,6 +6,8 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
     {
         public GameObject FormObject { get; }
 
-        public void SetForm(Form form);
+        public Form BaseForm { get; }
+
+        public void SetForm(Form form, FormObjectReferenceInstantiator instantiator);
     }
 }

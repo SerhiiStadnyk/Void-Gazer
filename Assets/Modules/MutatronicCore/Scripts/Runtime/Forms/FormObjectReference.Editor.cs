@@ -56,7 +56,7 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
         {
             if (view == null && _form != null)
             {
-                view = Instantiate(_form.ViewPrefab, Vector3.zero, Quaternion.identity, transform);
+                view = Instantiate(_form.ViewPrefab, transform.localPosition, Quaternion.identity, transform);
             }
         }
 

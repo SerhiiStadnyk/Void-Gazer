@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Unity.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 {
@@ -12,19 +13,31 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
         [SerializeField]
         protected Form _form;
 
+        protected FormObjectReferenceInstantiator formObjectReferenceInstantiator;
+
         public T Form => _form as T;
 
+        public Form BaseForm => _form;
+
         public GameObject FormObject => gameObject;
+
+
+        [Inject]
+        public void Inject(FormObjectReferenceInstantiator formRefInstantiator)
+        {
+            formObjectReferenceInstantiator ??= formRefInstantiator;
+        }
 
 
         /// <summary>
         /// Should be called only once on instantiating.
         /// </summary>
-        void IFormObjectReference.SetForm([NotNull] Form form)
+        void IFormObjectReference.SetForm([NotNull] Form form, [NotNull]FormObjectReferenceInstantiator instantiator)
         {
             if (_form == null)
             {
                 _form = form;
+                formObjectReferenceInstantiator = instantiator;
             }
             else
             {
