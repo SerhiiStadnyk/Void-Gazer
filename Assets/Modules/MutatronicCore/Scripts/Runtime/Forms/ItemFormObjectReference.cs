@@ -1,11 +1,14 @@
-using Modules.MutatronicCore.Scripts.Runtime.Inventory;
+using System;
+using Modules.MutatronicCore.Scripts.Runtime.Interfaces;
 using UnityEngine.Assertions;
 
 namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 {
-    public partial class ItemFormObjectReference : FormObjectReference<ItemForm>
+    public partial class ItemFormObjectReference : FormObjectReference<ItemForm>, IInteractable, IDisposable
     {
         private int _quantity = 1;
+
+        public event Action<IInteractable> OnDispose;
 
 
         public void SetQuantity(int quantity)
@@ -15,10 +18,16 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
         }
 
 
-        public virtual void CollectItem(InventoryBase toInventory)
+        void IInteractable.Interact(ActorFormObjectReference actorRef)
         {
-            toInventory.ReceiveItem(Form, _quantity);
+            actorRef.Inventory.ReceiveItem(Form, _quantity);
             formObjectReferenceInstantiator.DisposeFormReference(this);
+        }
+
+
+        void IDisposable.Dispose()
+        {
+            OnDispose?.Invoke(this);
         }
     }
 }

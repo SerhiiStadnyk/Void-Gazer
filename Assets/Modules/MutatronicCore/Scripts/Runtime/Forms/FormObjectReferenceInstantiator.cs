@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 {
@@ -19,6 +21,11 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 
         public void DisposeFormReference(IFormObjectReference formRef)
         {
+            if (formRef is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+
             Object.Destroy(formRef.FormObject);
         }
 
@@ -79,7 +86,7 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
                     rotation = rotation,
                     parent = parent
                 },
-                name = form.FormName
+                name = form.FormId
             };
 
             return result;

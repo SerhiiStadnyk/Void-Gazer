@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2144599383}
   - component: {fileID: 2144599382}
+  - component: {fileID: 2144599384}
   m_Layer: 0
   m_Name: Context
   m_TagString: Untagged
@@ -231,3 +232,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2144599384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144599381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbe801570ba85240a7e12851931ca7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _typeReferences:
+  - typeReference:
+      _serializableType: Modules.MutatronicCore.Scripts.Runtime.Forms.ActorForm,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    value: {fileID: 0}
+  - typeReference:
+      _serializableType: Modules.MutatronicCore.Scripts.Runtime.Forms.StaticForm,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    value: {fileID: 0}

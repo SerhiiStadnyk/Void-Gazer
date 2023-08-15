@@ -143,7 +143,7 @@ MonoBehaviour:
         - m_Target: {fileID: -2648586471567077632}
           m_TargetAssemblyTypeName: Modules.MutatronicCore.Scripts.Runtime.ItemCollectorBase,
             Assembly-CSharp
-          m_MethodName: CollectItem
+          m_MethodName: Interact
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

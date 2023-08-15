@@ -2,7 +2,7 @@ using Modules.MutatronicCore.Scripts.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace Modules.MutatronicCore.Editor
+namespace Modules.MutatronicCore.Scripts.Editor
 {
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer

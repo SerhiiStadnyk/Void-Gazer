@@ -1,5 +1,6 @@
 using Modules.MutatronicCore.Scripts.Attributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 {
@@ -9,8 +10,9 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
         [ReadOnlyField]
         private string _modelName = "Model";
 
+        [FormerlySerializedAs("_formName")]
         [SerializeField]
-        private string _formName;
+        private string _formId;
 
         [SerializeField]
         private GameObject _viewPrefab;
@@ -24,6 +26,8 @@ namespace Modules.MutatronicCore.Scripts.Runtime.Forms
 
         public string ModelName => _modelName;
 
-        public string FormName => _formName;
+        public string FormId => _formId;
+
+        public string LocalizationName => _formId;
     }
 }
