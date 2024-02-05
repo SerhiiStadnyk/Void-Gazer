@@ -19,11 +19,5 @@ namespace Movement
             Vector3 targetPos = actorTransform.position + actorTransform.forward * (Time.deltaTime * 10);
             _actor.Rigidbody.MovePosition(targetPos);
         }
-
-
-        private void Update()
-        {
-            MoveForward();
-        }
     }
 }
