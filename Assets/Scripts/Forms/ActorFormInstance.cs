@@ -4,14 +4,14 @@ namespace Forms
 {
     public class ActorFormInstance : BaseFormInstance<ActorForm>
     {
-        private Rigidbody _rigidbody;
+        private CharacterController _charController;
 
-        public Rigidbody Rigidbody => _rigidbody;
+        public CharacterController CharacterController => _charController;
 
 
         protected void Start()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            _charController = GetComponent<CharacterController>();
         }
     }
 }

@@ -28,5 +28,14 @@ public class PlayerMovementController : MonoBehaviour
         {
             _actorMovementController.MoveForward();
         }
+        else if (_inputHandler.MoveInput.y < 0)
+        {
+            _actorMovementController.MoveBackward();
+        }
+
+        if (_inputHandler.MoveInput.x != 0)
+        {
+            _actorMovementController.Rotate(_inputHandler.MoveInput.x);
+        }
     }
 }
