@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9106795571737836125, guid: 03f00583a5113554780585cf4dc553ca, type: 3}
       propertyPath: m_Name
-      value: BaseActorFormInstance
+      value: ActorFormInstance_Base
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,6 +62,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9106795571737836125, guid: 03f00583a5113554780585cf4dc553ca, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9147336828342207674}
+    - targetCorrespondingSourceObject: {fileID: 9106795571737836125, guid: 03f00583a5113554780585cf4dc553ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8704502288497846010}
+    - targetCorrespondingSourceObject: {fileID: 9106795571737836125, guid: 03f00583a5113554780585cf4dc553ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6811615872273328052}
   m_SourcePrefab: {fileID: 100100000, guid: 03f00583a5113554780585cf4dc553ca, type: 3}
 --- !u!1 &7278894035702645741 stripped
 GameObject:
@@ -80,7 +86,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c035c1d26c294ed42aef55a6f8e3a269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _form: {fileID: 0}
+  _form: {fileID: 11400000, guid: 7779f99790349f14684fcc2af10434fc, type: 2}
+  _interactionRadius: 2
+  _interactableLayerIndex: 6
 --- !u!143 &9147336828342207674
 CharacterController:
   m_ObjectHideFlags: 0
@@ -107,3 +115,36 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &8704502288497846010
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278894035702645741}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6811615872273328052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278894035702645741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf53f07a29c5d044991b65a25f52638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

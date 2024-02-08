@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI_NotificationAnimationController
+  m_Controller: {fileID: 9100000, guid: b4a56bda1017759418d7399ba2313f3a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: e6f30966164fe954ba37207b4acb0c36, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 229c5bad11924af47833316ea3bea466, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6dfe0c1cc73817e4db86316d71bd712e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 176311b1b03deab41a27669746d2b1f5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 65a0f0137a846ae4b9c810d73391d698, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ed66964d803bf624ba462d7475c7fb5f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ec9005b24fa44d247845462016fbcd3c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 23b0731f08c47f04ea909c3696dd2f7d, type: 2}
