@@ -9,6 +9,9 @@ public class Inventory : MonoBehaviour
 
     public event Action<ItemFormInstance> OnItemAdded;
 
+    public Dictionary<ItemForm, int> Items => _items;
+
+
     public bool AddItem(ItemFormInstance itemInstance, int quantity)
     {
         bool result = false;
@@ -16,14 +19,27 @@ public class Inventory : MonoBehaviour
 
         if (CanAddItem(item))
         {
-            if (!_items.ContainsKey(item))
+            if (!Items.ContainsKey(item))
             {
-                _items.Add(item, 0);
+                Items.Add(item, 0);
             }
 
-            _items[item] += quantity;
+            Items[item] += quantity;
             OnItemAdded?.Invoke(itemInstance);
             result = true;
+        }
+
+        return result;
+    }
+
+
+    public int GetItemCount(ItemForm item)
+    {
+        int result = 0;
+
+        if (Items.ContainsKey(item))
+        {
+            result = Items[item];
         }
 
         return result;

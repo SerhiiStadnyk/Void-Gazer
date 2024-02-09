@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GlobalEvents
 {
-    public class GlobalEventListenerBool : MonoBehaviour, IInitable
+    public class GlobalUnityEventListenerBool : MonoBehaviour, IInitable
     {
         [SerializeField]
         private GlobalEventBool _globalEvent;
+
+        [SerializeField]
+        private UnityEvent<bool> _unityEvent;
 
 
         void IInitable.Init()
@@ -16,7 +20,7 @@ namespace GlobalEvents
 
         private void OnEvent(bool value)
         {
-            gameObject.SetActive(value);
+            _unityEvent.Invoke(value);
         }
     }
 }
