@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edffa9353d1e68c479d0a2bbee7e67a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactableApproachedEvent: {fileID: 11400000, guid: e35d473ec668a9e4490a4d66d27a7a0b, type: 2}
 --- !u!114 &474867764878374879
 MonoBehaviour:
   m_ObjectHideFlags: 0

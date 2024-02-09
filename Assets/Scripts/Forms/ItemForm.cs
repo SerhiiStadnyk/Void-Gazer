@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Forms
 {
-    [CreateAssetMenu(fileName = "ItemForm", menuName = "Game/Forms/New Item", order = 1)]
+    [CreateAssetMenu(fileName = "ItemForm", menuName = "Game/Forms/Item", order = 1)]
     public class ItemForm : BaseForm
     {
         [SerializeField]

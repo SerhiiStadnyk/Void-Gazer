@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Forms
 {
-    public class ActorFormInstance : BaseFormInstance<ActorForm>
+    public class ActorFormInstance : BaseFormInstance<ActorForm>, IInitable
     {
         [SerializeField]
         private float _interactionRadius = 1f;
@@ -20,7 +20,7 @@ namespace Forms
         public Inventory ActorInventory => _inventory;
 
 
-        protected void Awake()
+        void IInitable.Init()
         {
             _charController = GetComponent<CharacterController>();
             _inventory = GetComponent<Inventory>();
