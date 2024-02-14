@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ObjectLifetimeHandler : MonoBehaviour
@@ -8,13 +7,10 @@ public class ObjectLifetimeHandler : MonoBehaviour
     {
         List<IInitable> initables = new List<IInitable>();
 
-        // Iterate through all GameObjects in the scene
-        foreach (var gameObject in Resources.FindObjectsOfTypeAll<GameObject>())
+        foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>())
         {
-            // Check each component of the GameObject
-            foreach (var component in gameObject.GetComponents<Component>())
+            foreach (Component component in obj.GetComponents<Component>())
             {
-                // Check if the component implements IInitable interface
                 if (component is IInitable initable)
                 {
                     initables.Add(initable);
@@ -22,8 +18,17 @@ public class ObjectLifetimeHandler : MonoBehaviour
             }
         }
 
-        // Initialize all components found
-        foreach (var initable in initables)
+        foreach (IInitable initable in initables)
+        {
+            initable.Init();
+        }
+    }
+
+
+    public void InitObject(GameObject obj)
+    {
+        IInitable[] initables = obj.GetComponentsInChildren<IInitable>(true);
+        foreach (IInitable initable in initables)
         {
             initable.Init();
         }

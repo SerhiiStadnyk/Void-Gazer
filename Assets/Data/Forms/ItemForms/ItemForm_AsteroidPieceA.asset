@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a65be7fbe27e3843ad481ff45ca637d, type: 3}
   m_Name: ItemForm_AsteroidPieceA
   m_EditorClassIdentifier: 
+  _formName: Asteroid_A
   _pickUpSound: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   _itemIcon: {fileID: 21300000, guid: 6886db5fac1305b4d82a95ca744de0c7, type: 3}

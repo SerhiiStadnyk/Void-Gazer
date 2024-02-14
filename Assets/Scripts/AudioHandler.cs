@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class AudioHandler : MonoBehaviour
 {
@@ -17,13 +18,22 @@ public class AudioHandler : MonoBehaviour
 
     private List<AudioSource> _audioSourcePool;
 
+    private Instantiator _instantiator;
+
+
+    [Inject]
+    public void Inject(Instantiator instantiator)
+    {
+        _instantiator = instantiator;
+    }
+
 
     private void Awake()
     {
         _audioSourcePool = new List<AudioSource>(_audioSourcePoolSize);
         for (int i = 0; i < _audioSourcePoolSize; i++)
         {
-            AudioSource instance = Instantiate(_audioSourcePrefab).GetComponent<AudioSource>();
+            AudioSource instance = _instantiator.Instantiate(_audioSourcePrefab, transform).GetComponent<AudioSource>();
             _audioSourcePool.Add(instance);
             instance.gameObject.SetActive(false);
         }

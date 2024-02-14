@@ -12,11 +12,13 @@ public class InventoryScreen : MonoBehaviour
     private Transform _container;
 
     private PlayerReference _playerReference;
+    private Instantiator _instantiator;
 
     [Inject]
-    public void Inject(PlayerReference playerReference)
+    public void Inject(PlayerReference playerReference, Instantiator instantiator)
     {
         _playerReference = playerReference;
+        _instantiator = instantiator;
     }
 
 
@@ -29,7 +31,7 @@ public class InventoryScreen : MonoBehaviour
 
             foreach (KeyValuePair<ItemForm, int> item in inventory.Items)
             {
-                UIItemRef uiItem = Instantiate(_uiItemRefPrefab, _container).GetComponent<UIItemRef>();
+                UIItemRef uiItem = _instantiator.Instantiate(_uiItemRefPrefab, _container).GetComponent<UIItemRef>();
                 uiItem.SetupItemRef(inventory, item.Key);
             }
         }
