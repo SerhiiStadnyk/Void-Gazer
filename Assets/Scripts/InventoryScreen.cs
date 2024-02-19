@@ -13,6 +13,7 @@ public class InventoryScreen : MonoBehaviour
 
     private PlayerReference _playerReference;
     private Instantiator _instantiator;
+    private UIItemRef _chosenItemRef;
 
     [Inject]
     public void Inject(PlayerReference playerReference, Instantiator instantiator)
@@ -32,7 +33,7 @@ public class InventoryScreen : MonoBehaviour
             foreach (KeyValuePair<ItemForm, int> item in inventory.Items)
             {
                 UIItemRef uiItem = _instantiator.Instantiate(_uiItemRefPrefab, _container).GetComponent<UIItemRef>();
-                uiItem.SetupItemRef(inventory, item.Key);
+                uiItem.SetupItemRef(inventory, item.Key, OnItemClocked);
             }
         }
         else
@@ -42,6 +43,26 @@ public class InventoryScreen : MonoBehaviour
             {
                 Destroy(child.gameObject);
             }
+        }
+    }
+
+
+    private void OnItemClocked(UIItemRef itemRef)
+    {
+        SetActiveItemRef(itemRef);
+        _chosenItemRef = itemRef;
+    }
+
+
+    private void SetActiveItemRef(UIItemRef newItemRef)
+    {
+        if (newItemRef != _chosenItemRef)
+        {
+            if (_chosenItemRef != null)
+            {
+                _chosenItemRef.SetActive(false);
+            }
+            newItemRef.SetActive(true);
         }
     }
 }

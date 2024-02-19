@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a65be7fbe27e3843ad481ff45ca637d, type: 3}
+  m_Name: ItemForm_AsteroidPieceB
+  m_EditorClassIdentifier: 
+  _formName: Asteroid_B
+  _pickUpSound: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  _itemIcon: {fileID: 21300000, guid: 6886db5fac1305b4d82a95ca744de0c7, type: 3}
