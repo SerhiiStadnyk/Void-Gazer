@@ -1,8 +1,9 @@
+using Forms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class Instantiator : MonoBehaviour
+public partial class Instantiator : MonoBehaviour
 {
     [SerializeField]
     private Transform _defaultContainer;
@@ -19,7 +20,7 @@ public class Instantiator : MonoBehaviour
     }
 
 
-    public GameObject InstantiateAtPointer(GameObject prefab)
+    protected GameObject InstantiateAtPointerInternal(GameObject prefab)
     {
         Vector3 pointerPos = Mouse.current.position.ReadValue();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
@@ -48,11 +49,24 @@ public class Instantiator : MonoBehaviour
 
     public GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion rotation, Transform parent)
     {
-        GameObject obj = GameObject.Instantiate(prefab, pos, rotation, parent);
-        _container.Inject(obj);
+        GameObject obj = _container.InstantiatePrefab(prefab, parent);
+        obj.transform.position = pos;
+        obj.transform.rotation = rotation;
 
         _objectLifetimeHandler.InitObject(obj);
 
         return obj;
+    }
+
+
+    public void Dispose(BaseFormInstance<BaseForm> formInstance)
+    {
+        Destroy(formInstance.gameObject);
+    }
+
+
+    public void Dispose(GameObject obj)
+    {
+        Destroy(obj);
     }
 }

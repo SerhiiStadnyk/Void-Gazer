@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Forms;
 using UnityEngine;
+using Zenject;
 
 public class Inventory : MonoBehaviour
 {
@@ -11,11 +12,19 @@ public class Inventory : MonoBehaviour
 
     public Dictionary<ItemForm, int> Items => _items;
 
+    private Instantiator _instantiator;
 
-    public bool AddItem(ItemFormInstance itemInstance, int quantity)
+
+    [Inject]
+    public void Inject(Instantiator instantiator)
+    {
+        _instantiator = instantiator;
+    }
+
+
+    public bool AddItem(ItemForm item, int quantity)
     {
         bool result = false;
-        ItemForm item = itemInstance.Form;
 
         if (CanAddItem(item))
         {
@@ -25,11 +34,48 @@ public class Inventory : MonoBehaviour
             }
 
             Items[item] += quantity;
-            OnItemAdded?.Invoke(itemInstance);
             result = true;
         }
 
         return result;
+    }
+
+
+    public bool PickupItem(ItemFormInstance itemInstance)
+    {
+        bool resul = AddItem(itemInstance.Form, itemInstance.Quantity);
+        if (resul)
+        {
+            OnItemAdded?.Invoke(itemInstance);
+        }
+
+        return resul;
+    }
+
+
+    public int RemoveItem(ItemForm item, int quantity)
+    {
+        int removedCount = 0;
+
+        if (Items.ContainsKey(item))
+        {
+            removedCount = Math.Min(quantity, Items[item]);
+            Items[item] -= removedCount;
+        }
+
+        if (Items[item] <= 0)
+        {
+            Items.Remove(item);
+        }
+
+        return removedCount;
+    }
+
+
+    public void DropItem(ItemForm item, int quantity)
+    {
+        int removedCount = RemoveItem(item, quantity);
+        _instantiator.Instantiate(item, removedCount, transform.position);
     }
 
 

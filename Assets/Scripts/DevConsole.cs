@@ -16,7 +16,7 @@ public class DevConsole : MonoBehaviour
     private InputActionAsset _playerControls;
 
     [SerializeField]
-    private List<GameObject> _itemPrefabs;
+    private List<ItemForm> _items;
 
     [SerializeField]
     private GameObject _uiPrefab;
@@ -24,7 +24,7 @@ public class DevConsole : MonoBehaviour
     [SerializeField]
     private Transform _container;
 
-    private GameObject _prefab;
+    private ItemForm _item;
     private InputAction _openConsoleAction;
     private InputAction _spawnAtAction;
     private InputAction _cancelAction;
@@ -61,10 +61,10 @@ public class DevConsole : MonoBehaviour
     }
 
 
-    public void ChosePrefab(GameObject prefab)
+    public void ChosePrefab(ItemForm item)
     {
         OpenConsole(new InputAction.CallbackContext());
-        _prefab = prefab;
+        _item = item;
 
         _spawnAtAction.Enable();
         _cancelAction.Enable();
@@ -83,11 +83,11 @@ public class DevConsole : MonoBehaviour
     {
         if (!_console.activeSelf)
         {
-            foreach (GameObject prefab in _itemPrefabs)
+            foreach (ItemForm item in _items)
             {
                 GameObject obj = _instantiator.Instantiate(_uiPrefab, _container);
-                obj.GetComponent<Button>().onClick.AddListener(() => ChosePrefab(prefab));
-                obj.GetComponentInChildren<TMP_Text>().text = prefab.GetComponent<ItemFormInstance>().Form.FormName;
+                obj.GetComponent<Button>().onClick.AddListener(() => ChosePrefab(item));
+                obj.GetComponentInChildren<TMP_Text>().text = item.FormName;
             }
             _console.SetActive(true);
             _spawnAtAction.Disable();
@@ -97,7 +97,7 @@ public class DevConsole : MonoBehaviour
         {
             foreach (Transform child in _container.transform)
             {
-                Destroy(child.gameObject);
+                _instantiator.Dispose(child.gameObject);
             }
             _console.SetActive(false);
         }
@@ -106,7 +106,7 @@ public class DevConsole : MonoBehaviour
 
     private void SpawnObject(InputAction.CallbackContext callbackContext)
     {
-        _instantiator.InstantiateAtPointer(_prefab);
+        _instantiator.InstantiateAtPointer(_item);
     }
 
 

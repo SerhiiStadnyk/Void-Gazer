@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _form: {fileID: 11400000, guid: 3bd38ab27b5bdbb49be358b8f9d061aa, type: 2}
+  _quantity: 1
 --- !u!65 &7817565845674718847
 BoxCollider:
   m_ObjectHideFlags: 0

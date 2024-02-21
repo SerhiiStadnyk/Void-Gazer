@@ -25,14 +25,24 @@ public class UIItemRef : MonoBehaviour
     private Color _inactiveColor;
 
     private Inventory _inventory;
+    private ItemForm _item;
+
+    public ItemForm Item => _item;
 
 
     public void SetupItemRef(Inventory inventory, ItemForm item, Action<UIItemRef> callback)
     {
         _inventory = inventory;
-        _itemName.text = item.name;
-        _itemQuantity.text = _inventory.GetItemCount(item).ToString();
+        _item = item;
+        _itemName.text = _item.name;
+        _itemQuantity.text = _inventory.GetItemCount(_item).ToString();
         _button.onClick.AddListener(() => callback(this));
+    }
+
+
+    public void UpdateData()
+    {
+        _itemQuantity.text = _inventory.GetItemCount(_item).ToString();
     }
 
 
