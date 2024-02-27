@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: dc05a9a29e13e2d43a2f45e2a6b96733, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,7 +152,8 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5356084032205004477, guid: 714a354bce043cc478cc4a3ca1538a5c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 9215355145486169418, guid: 714a354bce043cc478cc4a3ca1538a5c, type: 3}
       insertIndex: -1
@@ -221,6 +222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableApproachedEvent: {fileID: 11400000, guid: e35d473ec668a9e4490a4d66d27a7a0b, type: 2}
+  _interactionRadius: 1
+  _interactableLayerIndex: 0
 --- !u!114 &474867764878374879
 MonoBehaviour:
   m_ObjectHideFlags: 0
