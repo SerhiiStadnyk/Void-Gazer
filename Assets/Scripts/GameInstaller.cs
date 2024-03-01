@@ -24,12 +24,12 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.BindInstance(_playerInputHandler).AsSingle();
         Container.BindInstance(_audioHandler).AsSingle();
         Container.BindInstance(_uiNotificationHandler).AsSingle();
         Container.BindInstance(_inventoryScreen).AsSingle();
         Container.BindInstance(_objectLifetimeHandler).AsSingle();
         Container.BindInstance(_instantiator).AsSingle();
+        Container.BindInstance(_playerInputHandler).AsSingle();
 
         Container.BindInstance(new PlayerReference()).AsSingle();
     }

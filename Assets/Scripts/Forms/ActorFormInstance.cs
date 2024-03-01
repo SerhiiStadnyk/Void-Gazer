@@ -1,9 +1,10 @@
 using System;
+using Serializable;
 using UnityEngine;
 
 namespace Forms
 {
-    public class ActorFormInstance : BaseFormInstance<ActorForm>, IInitable
+    public class ActorFormInstance : GenericFormInstance<ActorForm>, IInitable, ISaveable
     {
         [SerializeField]
         private float _interactionRadius = 1f;
@@ -49,5 +50,26 @@ namespace Forms
 
             Array.Clear(colliders, 0, colliders.Length);
         }
+
+
+        void ISaveable.SaveData(Entry entry)
+        {
+            entry.SetVector3(nameof(transform.position), transform.position);
+        }
+
+
+        void ISaveable.LoadData(Entry entry)
+        {
+            transform.position = entry.GetVector3(nameof(transform.position));
+        }
+
+
+        void ISaveable.OnLoaded()
+        {
+            //TODO: IMPLEMENT_ME();
+        }
+
+
+        string ISaveable.GetId => gameObject.GetInstanceID().ToString();
     }
 }

@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Forms
 {
-    public class ItemFormInstance : BaseFormInstance<ItemForm>, IInteractable
+    public class ItemFormInstance : GenericFormInstance<ItemForm>, IInteractable
     {
         [SerializeField]
         private int _quantity;
@@ -26,7 +26,7 @@ namespace Forms
         {
             if (actor.ActorInventory.PickupItem(this))
             {
-                _instantiator.Dispose(gameObject);
+                _instantiator.Dispose(this);
             }
         }
     }

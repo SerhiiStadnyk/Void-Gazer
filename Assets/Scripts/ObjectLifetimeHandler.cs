@@ -1,20 +1,35 @@
 using System.Collections.Generic;
+using Forms;
 using UnityEngine;
+using Zenject;
 
 public class ObjectLifetimeHandler : MonoBehaviour
 {
+    private SaveManager _saveManager;
+
+
+    [Inject]
+    public void Inject(SaveManager saveManager)
+    {
+        _saveManager = saveManager;
+    }
+
+
     private void Awake()
     {
         List<IInitable> initables = new List<IInitable>();
 
-        foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>())
+        Component[] components = FindObjectsByType<Component>(FindObjectsSortMode.None);
+        foreach (Component component in components)
         {
-            foreach (Component component in obj.GetComponents<Component>())
+            if (component is IInitable initable)
             {
-                if (component is IInitable initable)
-                {
-                    initables.Add(initable);
-                }
+                initables.Add(initable);
+            }
+
+            if (component is ISaveable saveable)
+            {
+                _saveManager.RegisterSaveable(saveable);
             }
         }
 
@@ -31,6 +46,22 @@ public class ObjectLifetimeHandler : MonoBehaviour
         foreach (IInitable initable in initables)
         {
             initable.Init();
+        }
+
+        ISaveable[] saveables = obj.GetComponentsInChildren<ISaveable>(true);
+        foreach (ISaveable saveable in saveables)
+        {
+            _saveManager.RegisterSaveable(saveable);
+        }
+    }
+
+
+    public void DisposeObject(BaseFormInstance formInstance)
+    {
+        ISaveable[] saveables = formInstance.GetComponentsInChildren<ISaveable>(true);
+        foreach (ISaveable saveable in saveables)
+        {
+            _saveManager.UnregisterSaveable(saveable);
         }
     }
 }

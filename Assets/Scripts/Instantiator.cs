@@ -59,8 +59,9 @@ public partial class Instantiator : MonoBehaviour
     }
 
 
-    public void Dispose(BaseFormInstance<BaseForm> formInstance)
+    public void Dispose(BaseFormInstance formInstance)
     {
+        _objectLifetimeHandler.DisposeObject(formInstance);
         Destroy(formInstance.gameObject);
     }
 

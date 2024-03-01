@@ -1,6 +1,6 @@
 namespace Forms
 {
-    public class ObjectFormInstance : BaseFormInstance<ObjectForm>
+    public class ObjectFormInstance : GenericFormInstance<ObjectForm>
     {
     }
 }

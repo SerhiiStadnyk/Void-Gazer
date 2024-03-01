@@ -8,6 +8,7 @@ namespace Utility
         private const string _openInventory = "OpenInventory";
         private const string _leftMouseButton = "LeftMouseButton";
         private const string _rightMouseButton = "RightMouseButton";
+        private const string _escape = "Escape";
 
         private const string _devConsole = "DevConsole";
         private const string _debug = "Debug";
@@ -34,5 +35,7 @@ namespace Utility
         public static string DebugSpawnAt => _debugSpawnAt;
 
         public static string DebugCancel => _debugCancel;
+
+        public static string Escape => _escape;
     }
 }
