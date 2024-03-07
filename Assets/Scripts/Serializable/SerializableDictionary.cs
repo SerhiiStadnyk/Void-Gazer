@@ -1,11 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Serializable
 {
     [Serializable]
-    public class SerializableDictionary<TKey, TValue>
+    public class SerializableDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         [SerializeField]
         private List<TKey> _keys;
@@ -15,11 +16,19 @@ namespace Serializable
 
         private Dictionary<TKey, TValue> _dictionary = new Dictionary<TKey, TValue>();
 
+        public Dictionary<TKey, TValue> Dictionary => _dictionary;
+
 
         public SerializableDictionary(int count = 0)
         {
             _keys = new List<TKey>(count);
             _values = new List<TValue>(count);
+        }
+
+
+        public SerializableDictionary(Dictionary<TKey, TValue> dictionary)
+        {
+            _dictionary = new Dictionary<TKey, TValue>(dictionary);
         }
 
 
@@ -32,8 +41,10 @@ namespace Serializable
 
 
         // Implement this method to add data to the dictionary during serialization
-        public void OnBeforeSerialize()
+        public void Serialize()
         {
+            _keys ??= new List<TKey>();
+            _values ??= new List<TValue>();
             _keys.Clear();
             _values.Clear();
 
@@ -46,14 +57,15 @@ namespace Serializable
 
 
         // Implement this method to rebuild the dictionary from serialized data
-        public void OnAfterDeserialize()
+        public void Deserialize()
         {
-            _dictionary.Clear();
-
             if (_keys.Count != _values.Count)
             {
                 throw new Exception($"The number of keys ({_keys.Count}) and values ({_values.Count}) does not match.");
             }
+
+            _dictionary ??= new Dictionary<TKey, TValue>(_keys.Count);
+            _dictionary.Clear();
 
             for (int i = 0; i < _keys.Count; i++)
             {
@@ -87,6 +99,20 @@ namespace Serializable
         public void Clear()
         {
             _dictionary.Clear();
+        }
+
+
+        // Implementation of IEnumerable.GetEnumerator method
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            return _dictionary.GetEnumerator();
+        }
+
+
+        // Explicit implementation of IEnumerable.GetEnumerator method
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

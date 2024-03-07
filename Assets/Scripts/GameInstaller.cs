@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class GameInstaller : MonoInstaller
@@ -15,8 +16,9 @@ public class GameInstaller : MonoInstaller
     [SerializeField]
     private InventoryScreen _inventoryScreen;
 
+    [FormerlySerializedAs("_objectLifetimeHandler")]
     [SerializeField]
-    private ObjectLifetimeHandler _objectLifetimeHandler;
+    private SceneLifetimeHandler _sceneLifetimeHandler;
 
     [SerializeField]
     private Instantiator _instantiator;
@@ -27,7 +29,7 @@ public class GameInstaller : MonoInstaller
         Container.BindInstance(_audioHandler).AsSingle();
         Container.BindInstance(_uiNotificationHandler).AsSingle();
         Container.BindInstance(_inventoryScreen).AsSingle();
-        Container.BindInstance(_objectLifetimeHandler).AsSingle();
+        Container.BindInstance(_sceneLifetimeHandler).AsSingle();
         Container.BindInstance(_instantiator).AsSingle();
         Container.BindInstance(_playerInputHandler).AsSingle();
 

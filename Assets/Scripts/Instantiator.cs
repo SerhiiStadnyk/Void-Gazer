@@ -9,14 +9,14 @@ public partial class Instantiator : MonoBehaviour
     private Transform _defaultContainer;
 
     private DiContainer _container;
-    private ObjectLifetimeHandler _objectLifetimeHandler;
+    private SceneLifetimeHandler _sceneLifetimeHandler;
 
 
     [Inject]
-    public void Inject(DiContainer container, ObjectLifetimeHandler objectLifetimeHandler)
+    public void Inject(DiContainer container, SceneLifetimeHandler sceneLifetimeHandler)
     {
         _container = container;
-        _objectLifetimeHandler = objectLifetimeHandler;
+        _sceneLifetimeHandler = sceneLifetimeHandler;
     }
 
 
@@ -53,7 +53,7 @@ public partial class Instantiator : MonoBehaviour
         obj.transform.position = pos;
         obj.transform.rotation = rotation;
 
-        _objectLifetimeHandler.InitObject(obj);
+        _sceneLifetimeHandler.InitObject(obj);
 
         return obj;
     }
@@ -61,13 +61,14 @@ public partial class Instantiator : MonoBehaviour
 
     public void Dispose(BaseFormInstance formInstance)
     {
-        _objectLifetimeHandler.DisposeObject(formInstance);
+        _sceneLifetimeHandler.DisposeObject(formInstance.gameObject);
         Destroy(formInstance.gameObject);
     }
 
 
     public void Dispose(GameObject obj)
     {
+        _sceneLifetimeHandler.DisposeObject(gameObject);
         Destroy(obj);
     }
 }

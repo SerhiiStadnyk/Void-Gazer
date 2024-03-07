@@ -44,17 +44,18 @@ public class DevConsole : MonoBehaviour
         _openConsoleAction = _playerControls.FindActionMap(UtilityTermMap.Debug).FindAction(UtilityTermMap.DevConsole);
         _spawnAtAction = _playerControls.FindActionMap(UtilityTermMap.Debug).FindAction(UtilityTermMap.DebugSpawnAt);
         _cancelAction = _playerControls.FindActionMap(UtilityTermMap.Debug).FindAction(UtilityTermMap.DebugCancel);
-        RegisterInputActions();
     }
 
 
     private void OnEnable()
     {
+        RegisterInputActions();
         _openConsoleAction.Enable();
     }
 
     private void OnDisable()
     {
+        UnregisterInputActions();
         _openConsoleAction.Disable();
         _spawnAtAction.Disable();
         _cancelAction.Disable();
@@ -76,6 +77,14 @@ public class DevConsole : MonoBehaviour
         _openConsoleAction.performed += OpenConsole;
         _spawnAtAction.performed += SpawnObject;
         _cancelAction.performed += CancelActionDebug;
+    }
+
+
+    private void UnregisterInputActions()
+    {
+        _openConsoleAction.performed -= OpenConsole;
+        _spawnAtAction.performed -= SpawnObject;
+        _cancelAction.performed -= CancelActionDebug;
     }
 
 

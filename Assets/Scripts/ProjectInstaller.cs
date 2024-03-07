@@ -14,5 +14,6 @@ public class ProjectInstaller : MonoInstaller
     {
         Container.BindInstance(_appTransitionHandler).AsSingle();
         Container.BindInstance(_saveManager).AsSingle();
+        Container.BindInstance(new SceneLifetimeHandlersContainer()).AsSingle();
     }
 }

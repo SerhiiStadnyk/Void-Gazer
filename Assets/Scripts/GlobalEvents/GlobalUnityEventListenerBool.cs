@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace GlobalEvents
 {
-    public class GlobalUnityEventListenerBool : MonoBehaviour, IInitable
+    public class GlobalUnityEventListenerBool : MonoBehaviour, IInitable, IDisposable
     {
         [SerializeField]
         private GlobalEventBool _globalEvent;
@@ -14,6 +15,7 @@ namespace GlobalEvents
 
         void IInitable.Init()
         {
+            Debug.LogWarning("Init");
             _globalEvent.OnTrigger += OnEvent;
         }
 
@@ -21,6 +23,12 @@ namespace GlobalEvents
         private void OnEvent(bool value)
         {
             _unityEvent.Invoke(value);
+        }
+
+
+        public void Dispose()
+        {
+            Debug.LogWarning("Dispose");
         }
     }
 }

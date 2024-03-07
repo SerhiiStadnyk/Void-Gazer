@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Serializable;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SaveManager : MonoBehaviour, IInitable
 {
+    [SerializeField]
+    private IdManager _idManager;
+
+    private SaveFile _sessionSaveFile;
+
     private List<SaveFile> _saveFiles = new List<SaveFile>();
-    private List<ISaveable> _saveables = new List<ISaveable>();
+    private List<SceneLifetimeHandler> _lifetimeHandlers = new List<SceneLifetimeHandler>();
 
     private const string SAVE_FILES_ID = "SaveFiles";
 
@@ -27,15 +32,15 @@ public class SaveManager : MonoBehaviour, IInitable
     }
 
 
-    public void RegisterSaveable(ISaveable saveable)
+    public void RegisterLifetimeHandler(SceneLifetimeHandler lifetimeHandler)
     {
-        _saveables.Add(saveable);
+        _lifetimeHandlers.Add(lifetimeHandler);
     }
 
 
-    public void UnregisterSaveable(ISaveable saveable)
+    public void UnregisterLifetimeHandler(SceneLifetimeHandler lifetimeHandler)
     {
-        _saveables.Remove(saveable);
+        _lifetimeHandlers.Remove(lifetimeHandler);
     }
 
 
@@ -58,13 +63,22 @@ public class SaveManager : MonoBehaviour, IInitable
     {
         saveName ??= saveFile.Name;
 
-        saveFile.InitSave(_saveables.Count, saveName);
-        foreach (ISaveable saveable in _saveables)
+        int saveablesCount = _lifetimeHandlers.SelectMany(handler => handler.Saveables).Count();
+        saveFile.InitSave(saveablesCount, saveName);
+
+        ISaveable idManager = _idManager;
+        Entry idManagerEntry = new Entry(idManager.Id);
+        idManager.SaveData(idManagerEntry);
+        saveFile.Register(idManagerEntry);
+
+        foreach (SceneLifetimeHandler lifetimeHandler in _lifetimeHandlers)
         {
-            Entry entry = new Entry(saveable.GetId);
-            saveable.SaveData(entry);
-            entry.Serialize();
-            saveFile.Register(entry);
+            foreach (ISaveable saveable in lifetimeHandler.Saveables)
+            {
+                Entry entry = new Entry(saveable.Id);
+                saveable.SaveData(entry);
+                saveFile.Register(entry);
+            }
         }
 
         saveFile.Serialize();
@@ -72,26 +86,32 @@ public class SaveManager : MonoBehaviour, IInitable
     }
 
 
-    private void Load(SaveFile saveFile)
+    public void InitLoading(SaveFile saveFile)
     {
         saveFile.Deserialize();
+        _sessionSaveFile = saveFile;
+    }
 
-        foreach (ISaveable saveable in _saveables)
+
+    public void LoadSceneData(List<ISaveable> saveables)
+    {
+        if (_sessionSaveFile != null)
         {
-            if (saveFile.Entries.ContainsKey(saveable.GetId))
+            foreach (ISaveable saveable in saveables)
             {
-                Entry entry = saveFile.Entries[saveable.GetId];
-                entry.Deserialize();
-                saveable.LoadData(entry);
-            }
-            else
-            {
-                //TODO: Dispose objects that are not saved since they been disposed during gameplay
-                Debug.LogWarning("Dispose object");
+                if (_sessionSaveFile.Entries.ContainsKey(saveable.Id))
+                {
+                    Entry entry = _sessionSaveFile.Entries[saveable.Id];
+                    entry.Deserialize();
+                    saveable.LoadData(entry);
+                }
+                else
+                {
+                    //TODO: Dispose objects that are not saved since they been disposed during gameplay
+                    Debug.LogWarning("Dispose object");
+                }
             }
         }
-
-        //TODO: Instantiate and load new objects since they where instantiated during gameplay
     }
 
 
@@ -146,18 +166,19 @@ public class SaveFile
 
     public void Register(Entry entry)
     {
+        entry.Serialize();
         _entries.AddOrUpdate(entry.EntryId, entry);
     }
 
 
     public void Serialize()
     {
-        _entries.OnBeforeSerialize();
+        _entries.Serialize();
     }
 
 
     public void Deserialize()
     {
-        _entries.OnAfterDeserialize();
+        _entries.Deserialize();
     }
 }

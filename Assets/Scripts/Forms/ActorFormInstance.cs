@@ -1,4 +1,5 @@
 using System;
+using EditorScripts;
 using Serializable;
 using UnityEngine;
 
@@ -12,6 +13,10 @@ namespace Forms
         [SerializeField]
         private int _interactableLayerIndex;
 
+        [SerializeField]
+        [ReadOnly]
+        private string _id;
+
         private CharacterController _charController;
         private Inventory _inventory;
 
@@ -19,6 +24,12 @@ namespace Forms
 
         public CharacterController CharacterController => _charController;
         public Inventory ActorInventory => _inventory;
+
+        public string Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
 
         void IInitable.Init()
@@ -54,22 +65,15 @@ namespace Forms
 
         void ISaveable.SaveData(Entry entry)
         {
-            entry.SetVector3(nameof(transform.position), transform.position);
+            //entry.SetVector3(nameof(transform.position), transform.position);
+            entry.SetObject<Vector3>(nameof(transform.position), transform.position);
         }
 
 
         void ISaveable.LoadData(Entry entry)
         {
-            transform.position = entry.GetVector3(nameof(transform.position));
+            //transform.position = entry.GetVector3(nameof(transform.position));
+            transform.position = entry.GetObject<Vector3>(nameof(transform.position));
         }
-
-
-        void ISaveable.OnLoaded()
-        {
-            //TODO: IMPLEMENT_ME();
-        }
-
-
-        string ISaveable.GetId => gameObject.GetInstanceID().ToString();
     }
 }

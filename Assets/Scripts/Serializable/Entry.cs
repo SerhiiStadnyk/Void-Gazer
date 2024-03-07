@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Serializable
@@ -10,7 +11,7 @@ namespace Serializable
         private string _entryId;
 
         [SerializeField]
-        private SerializableDictionary<string, Vector3> _vector3Value = new SerializableDictionary<string, Vector3>();
+        private SerializableDictionary<string, string> _objects = new SerializableDictionary<string, string>();
 
         public string EntryId => _entryId;
 
@@ -23,37 +24,87 @@ namespace Serializable
 
         public void Serialize()
         {
-            _vector3Value.OnBeforeSerialize();
+            _objects.Serialize();
         }
 
 
         public void Deserialize()
         {
-            _vector3Value.OnAfterDeserialize();
+            _objects.Deserialize();
         }
 
 
-        public void SetVector3(string fieldId, Vector3 value)
+        public void SetObject<T>(string fieldId, object value)
         {
-            if (!_vector3Value.ContainsKey(fieldId))
-            {
-                _vector3Value.AddOrUpdate(fieldId, value);
-            }
-            else
-            {
-                Debug.LogError($"Entry already contains field with id {fieldId}");
-            }
+            string json = JsonUtility.ToJson(value);
+            _objects.AddOrUpdate(fieldId, json);
         }
 
 
-        public Vector3 GetVector3(string fieldId)
+        public T GetObject<T>(string fieldId)
         {
-            Vector3 result = Vector3.zero;
-            if (_vector3Value.ContainsKey(fieldId))
+            T result = default;
+            if (_objects.ContainsKey(fieldId))
             {
-                result = _vector3Value[fieldId];
+                result = JsonUtility.FromJson<T>(_objects[fieldId]);
             }
             return result;
+        }
+
+
+        public List<T> GetObjectList<T>(string fieldId)
+        {
+            List<T> result = new List<T>();
+            if (_objects.ContainsKey(fieldId))
+            {
+                SerializableList<T> serializableList = JsonUtility.FromJson<SerializableList<T>>(_objects[fieldId]);
+                result = serializableList.values;
+            }
+
+            return result;
+        }
+
+
+        public void SetObjectList<T>(string fieldId, List<T> list)
+        {
+            var serializableList = new SerializableList<T>(list);
+            string json = JsonUtility.ToJson(serializableList);
+            _objects.AddOrUpdate(fieldId, json);
+        }
+
+
+        public Dictionary<TKey, TValue> GetObjectDictionary<TKey, TValue>(string fieldId)
+        {
+            Dictionary<TKey, TValue> result = new Dictionary<TKey, TValue>();
+            if (_objects.ContainsKey(fieldId))
+            {
+                SerializableDictionary<TKey, TValue> serializableDictionary = JsonUtility.FromJson<SerializableDictionary<TKey, TValue>>(_objects[fieldId]);
+                serializableDictionary.Deserialize();
+                result = serializableDictionary.Dictionary;
+            }
+
+            return result;
+        }
+
+
+        public void SetObjectDictionary<TKey, TValue>(string fieldId, Dictionary<TKey, TValue> dictionary)
+        {
+            var serializableDictionary = new SerializableDictionary<TKey, TValue>(dictionary);
+            serializableDictionary.Serialize();
+            string json = JsonUtility.ToJson(serializableDictionary);
+            _objects.AddOrUpdate(fieldId, json);
+        }
+    }
+
+
+    [Serializable]
+    public class SerializableList<T>
+    {
+        public List<T> values;
+
+        public SerializableList(List<T> list)
+        {
+            values = list;
         }
     }
 }
