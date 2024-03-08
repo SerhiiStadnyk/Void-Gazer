@@ -54,6 +54,8 @@ public class PlayerInputHandler : MonoBehaviour, IDisposable
         _openGameMenuAction.Disable();
 
         UnregisterInputActions();
+        
+        Debug.LogWarning("Player Input: OnDisable");
     }
 
 
@@ -115,5 +117,7 @@ public class PlayerInputHandler : MonoBehaviour, IDisposable
         _interactAction?.Dispose();
         _openInventoryAction?.Dispose();
         _openGameMenuAction?.Dispose();
+        
+        Debug.LogWarning("Player Input: Dispose");
     }
 }

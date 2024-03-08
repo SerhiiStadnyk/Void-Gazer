@@ -25,7 +25,6 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
 
     void IDisposable.Dispose()
     {
-        Debug.LogWarning("Dispose scene");
         if (Saveables != null && Saveables.Count > 0)
         {
             Saveables.Clear();
@@ -47,7 +46,6 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
         {
             if (component is IInitable initable)
             {
-                Debug.LogWarning($"{gameObject.name} {initable.GetType()}");
                 initables.Add(initable);
             }
 
@@ -99,6 +97,7 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
 
     public void DisposeScene(Scene scene)
     {
+        gameObject.SetActive(false);
         if (scene == gameObject.scene)
         {
             foreach (IDisposable disposable in _disposables)
