@@ -42,11 +42,12 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
         _disposables = new List<IDisposable>();
         List<IInitable> initables = new List<IInitable>();
 
-        Component[] components = FindObjectsByType<Component>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        Component[] components = GetComponentsInChildren<Component>(true);
         foreach (Component component in components)
         {
             if (component is IInitable initable)
             {
+                Debug.LogWarning($"{gameObject.name} {initable.GetType()}");
                 initables.Add(initable);
             }
 

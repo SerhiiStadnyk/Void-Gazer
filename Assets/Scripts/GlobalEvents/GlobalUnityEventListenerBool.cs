@@ -15,20 +15,19 @@ namespace GlobalEvents
 
         void IInitable.Init()
         {
-            Debug.LogWarning("Init");
             _globalEvent.OnTrigger += OnEvent;
+        }
+
+
+        void IDisposable.Dispose()
+        {
+            _globalEvent.OnTrigger -= OnEvent;
         }
 
 
         private void OnEvent(bool value)
         {
             _unityEvent.Invoke(value);
-        }
-
-
-        public void Dispose()
-        {
-            Debug.LogWarning("Dispose");
         }
     }
 }

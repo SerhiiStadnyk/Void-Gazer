@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace GlobalEvents
 {
-    public class GlobalUnityEventListenerScene : MonoBehaviour, IInitable
+    public class GlobalUnityEventListenerScene : MonoBehaviour, IInitable, IDisposable
     {
         [SerializeField]
         private GlobalEventScene _globalEvent;
@@ -15,6 +16,12 @@ namespace GlobalEvents
         void IInitable.Init()
         {
             _globalEvent.OnTrigger += OnEvent;
+        }
+
+
+        void IDisposable.Dispose()
+        {
+            _globalEvent.OnTrigger -= OnEvent;
         }
 
 

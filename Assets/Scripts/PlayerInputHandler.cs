@@ -32,20 +32,6 @@ public class PlayerInputHandler : MonoBehaviour, IDisposable
         _interactAction = _playerControls.FindActionMap(UtilityTermMap.Player).FindAction(UtilityTermMap.Interact);
         _openInventoryAction = _playerControls.FindActionMap(UtilityTermMap.Player).FindAction(UtilityTermMap.OpenInventory);
         _openGameMenuAction = _playerControls.FindActionMap(UtilityTermMap.Player).FindAction(UtilityTermMap.Escape);
-
-        RegisterInputActions();
-    }
-
-
-    private void RegisterInputActions()
-    {
-        _moveAction.performed += context => MoveInput = context.ReadValue<Vector2>();
-        _moveAction.canceled += _ => MoveInput = Vector2.zero;
-
-        _interactAction.performed += _ => OnInteract?.Invoke();
-        _openInventoryAction.performed += OnOpenInventory;
-
-        _openGameMenuAction.performed += _ => _escapeInputEvent?.Invoke();
     }
 
 
@@ -55,6 +41,8 @@ public class PlayerInputHandler : MonoBehaviour, IDisposable
         _interactAction.Enable();
         _openInventoryAction.Enable();
         _openGameMenuAction.Enable();
+
+        RegisterInputActions();
     }
 
 
@@ -64,10 +52,58 @@ public class PlayerInputHandler : MonoBehaviour, IDisposable
         _interactAction.Disable();
         _openInventoryAction.Disable();
         _openGameMenuAction.Disable();
+
+        UnregisterInputActions();
     }
 
 
-    public void OnOpenInventory(InputAction.CallbackContext callbackContext)
+    private void RegisterInputActions()
+    {
+        _moveAction.performed += OnMoveActionPerformed;
+        _moveAction.canceled += OnMoveActionCanceled;
+
+        _interactAction.performed += OnInteractActionPerformed;
+        _openInventoryAction.performed += OnOpenInventory;
+        _openGameMenuAction.performed += OnOpenGameMenuActionPerformed;
+    }
+
+
+    private void UnregisterInputActions()
+    {
+        _moveAction.performed -= OnMoveActionPerformed;
+        _moveAction.canceled -= OnMoveActionCanceled;
+
+        _interactAction.performed -= OnInteractActionPerformed;
+        _openInventoryAction.performed -= OnOpenInventory;
+        _openGameMenuAction.performed -= OnOpenGameMenuActionPerformed;
+    }
+
+
+    private void OnOpenGameMenuActionPerformed(InputAction.CallbackContext context)
+    {
+        _escapeInputEvent?.Invoke();
+    }
+
+
+    private void OnInteractActionPerformed(InputAction.CallbackContext context)
+    {
+        OnInteract?.Invoke();
+    }
+
+
+    private void OnMoveActionCanceled(InputAction.CallbackContext context)
+    {
+        MoveInput = Vector2.zero;
+    }
+
+
+    private void OnMoveActionPerformed(InputAction.CallbackContext context)
+    {
+        MoveInput = context.ReadValue<Vector2>();
+    }
+
+
+    private void OnOpenInventory(InputAction.CallbackContext callbackContext)
     {
         _openInventoryInputEvent.TriggerEvent();
     }
