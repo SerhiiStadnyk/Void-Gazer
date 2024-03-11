@@ -2,23 +2,24 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISelectableElement : MonoBehaviour
+public class UISelectableElementDefault : MonoBehaviour
 {
     [SerializeField]
-    private Image _backgroundImage;
+    protected Image _backgroundImage;
 
     [SerializeField]
-    private Button _button;
+    protected Button _button;
 
     [SerializeField]
-    private Color _activeColor;
+    protected Color _activeColor;
 
     [SerializeField]
-    private Color _inactiveColor;
+    protected Color _inactiveColor;
 
 
-    public virtual void SetupElement(Action callback)
+    public virtual void InitElement(Action callback)
     {
+        _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(() => callback?.Invoke());
     }
 

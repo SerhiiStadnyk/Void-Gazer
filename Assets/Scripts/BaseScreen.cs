@@ -15,4 +15,17 @@ public class BaseScreen : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+
+    public virtual void ActivateScreen()
+    {
+        if (!gameObject.activeSelf)
+        {
+            OpenScreen();
+        }
+        else
+        {
+            CloseScreen();
+        }
+    }
 }

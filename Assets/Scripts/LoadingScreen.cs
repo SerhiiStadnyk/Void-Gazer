@@ -7,13 +7,13 @@ public class LoadingScreen : BaseScreen
     private Transform _container;
 
     [SerializeField]
-    private UISelectableElement _saveFileUiPrefab;
+    private UISelectableElementDefault _saveFileUiPrefab;
 
     [SerializeField]
     private SceneReference _sceneReference;
 
     private SaveFile _selectedSaveFile;
-    private UISelectableElement _selectedElement;
+    private UISelectableElementDefault _selectedElementDefault;
 
     private SaveManager _saveManager;
     private Instantiator _instantiator;
@@ -68,7 +68,7 @@ public class LoadingScreen : BaseScreen
     private void CleanScreen()
     {
         _selectedSaveFile = null;
-        _selectedElement = null;
+        _selectedElementDefault = null;
 
         foreach (Transform child in _container)
         {
@@ -82,23 +82,23 @@ public class LoadingScreen : BaseScreen
         CleanScreen();
         foreach (SaveFile saveFile in _saveManager.SaveFiles)
         {
-            UISelectableElement element = _instantiator.Instantiate(_saveFileUiPrefab.gameObject, _container).GetComponent<UISelectableElement>();
-            element.SetupElement(() => OnSaveSelected(saveFile, element));
+            UISelectableElementDefault elementDefault = _instantiator.Instantiate(_saveFileUiPrefab.gameObject, _container).GetComponent<UISelectableElementDefault>();
+            elementDefault.InitElement(() => OnSaveSelected(saveFile, elementDefault));
         }
     }
 
 
-    private void OnSaveSelected(SaveFile saveFile, UISelectableElement element)
+    private void OnSaveSelected(SaveFile saveFile, UISelectableElementDefault elementDefault)
     {
-        if (_selectedElement != element)
+        if (_selectedElementDefault != elementDefault)
         {
             if (_selectedSaveFile != null)
             {
-                _selectedElement.SetActive(false);
+                _selectedElementDefault.SetActive(false);
             }
 
-            _selectedElement = element;
-            _selectedElement.SetActive(true);
+            _selectedElementDefault = elementDefault;
+            _selectedElementDefault.SetActive(true);
 
             _selectedSaveFile = saveFile;
         }

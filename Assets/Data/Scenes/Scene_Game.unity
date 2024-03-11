@@ -1542,7 +1542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &312325033
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3093,14 +3093,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702013814}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1159473960}
   - {fileID: 1899749600}
-  m_Father: {fileID: 2063076725}
+  m_Father: {fileID: 1028679253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3178,7 +3178,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 702013818}
         m_TargetAssemblyTypeName: InventoryScreen, Assembly-CSharp
-        m_MethodName: OpenInventory
+        m_MethodName: ActivateScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4453,11 +4453,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd45ff27e367d04b9751be264d5c838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerControls: {fileID: -944628639613478452, guid: b2169ecdd5c443b4bb82078b45cc74af, type: 3}
   _gameMenuScreen: {fileID: 812859691}
-  _menusScreens:
-  - {fileID: 812859691}
-  - {fileID: 732139430}
-  - {fileID: 764197443}
+  _menuScreensContainer: {fileID: 1000613988}
+  _gameplayScreensContainer: {fileID: 1028679253}
+  _openInventoryInputEvent: {fileID: 11400000, guid: 574d4599fefa81e48b2ce7bcbbd9c7f1, type: 2}
+  _openDebugConsoleInputEvent: {fileID: 11400000, guid: fe7986694dfedd745a568e48e6224c43, type: 2}
 --- !u!1 &961228663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4703,7 +4704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1000613988}
   m_Layer: 5
-  m_Name: Menues
+  m_Name: MenuScreens
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4724,6 +4725,43 @@ RectTransform:
   - {fileID: 812859690}
   - {fileID: 732139428}
   - {fileID: 764197441}
+  m_Father: {fileID: 2063076725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1028679252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028679253}
+  m_Layer: 5
+  m_Name: GameplayScreens
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1028679253
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028679252}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 702013815}
+  - {fileID: 1483441434}
   m_Father: {fileID: 2063076725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6363,22 +6401,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerControls: {fileID: -944628639613478452, guid: b2169ecdd5c443b4bb82078b45cc74af, type: 3}
-  _openInventoryInputEvent: {fileID: 11400000, guid: 574d4599fefa81e48b2ce7bcbbd9c7f1, type: 2}
-  _escapeInputEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 937583081}
-        m_TargetAssemblyTypeName: GameMenusManager, Assembly-CSharp
-        m_MethodName: OnEscape
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &1382665717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6703,13 +6725,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1483441434}
   - component: {fileID: 1483441435}
+  - component: {fileID: 1483441436}
   m_Layer: 5
-  m_Name: DevConsole
+  m_Name: DebugScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1483441434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6717,13 +6740,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483441433}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 312325033}
-  m_Father: {fileID: 2063076725}
+  m_Father: {fileID: 1028679253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6742,13 +6765,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427d717c4b49ddc4aabbefc624d173dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _console: {fileID: 312325032}
   _playerControls: {fileID: -944628639613478452, guid: b2169ecdd5c443b4bb82078b45cc74af, type: 3}
   _items:
   - {fileID: 11400000, guid: 5426328a4d6eeb147b4d91a43c97421f, type: 2}
   - {fileID: 11400000, guid: 01410be73afed874fa75a55a05623eee, type: 2}
   _uiPrefab: {fileID: 6144850376411822690, guid: 2e344d59efc571d4891c9e4c31db64bf, type: 3}
   _container: {fileID: 165857124}
+--- !u!114 &1483441436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483441433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86df514513e1c324d9f1b889cc0ba538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _globalEvent: {fileID: 11400000, guid: fe7986694dfedd745a568e48e6224c43, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1483441435}
+        m_TargetAssemblyTypeName: DevConsole, Assembly-CSharp
+        m_MethodName: ActivateScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1501585397
 GameObject:
   m_ObjectHideFlags: 0
@@ -8605,9 +8655,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1000613988}
+  - {fileID: 1028679253}
   - {fileID: 816385163}
-  - {fileID: 702013815}
-  - {fileID: 1483441434}
   m_Father: {fileID: 2107668063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

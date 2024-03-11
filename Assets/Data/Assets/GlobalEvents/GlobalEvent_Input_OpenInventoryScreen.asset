@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad7e63848e8aa14ba8900bed29e68e0, type: 3}
-  m_Name: GlobalEvent_Input_OpenInventory
+  m_Name: GlobalEvent_Input_OpenInventoryScreen
   m_EditorClassIdentifier: 

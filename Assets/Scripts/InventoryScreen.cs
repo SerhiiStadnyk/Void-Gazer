@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class InventoryScreen : MonoBehaviour
+public class InventoryScreen : BaseScreen
 {
     [SerializeField]
     private GameObject _uiItemRefPrefab;
@@ -18,9 +18,10 @@ public class InventoryScreen : MonoBehaviour
     private PlayerReference _playerReference;
     private Instantiator _instantiator;
 
-    private UIItemRef _chosenItemRef;
-    private List<UIItemRef> _uiItemRefs = new List<UIItemRef>();
+    private UISelectableItem _chosenSelectableItem;
+    private Dictionary<UISelectableItem, ItemForm> _uiItemElements = new Dictionary<UISelectableItem, ItemForm>();
     private Inventory _inventory;
+
 
     [Inject]
     public void Inject(PlayerReference playerReference, Instantiator instantiator)
@@ -30,71 +31,96 @@ public class InventoryScreen : MonoBehaviour
     }
 
 
-    public void OpenInventory()
+    public override void OpenScreen()
     {
         _inventory = _playerReference.Player.ActorInventory;
-        if (!gameObject.activeSelf)
-        {
-            gameObject.SetActive(true);
-            _dropButton.gameObject.SetActive(false);
+        _dropButton.gameObject.SetActive(false);
 
-            foreach (KeyValuePair<ItemForm, int> item in _inventory.Items)
-            {
-                UIItemRef uiItem = _instantiator.Instantiate(_uiItemRefPrefab, _container).GetComponent<UIItemRef>();
-                uiItem.SetupItemRef(_inventory, item.Key, OnItemClicked);
-                _uiItemRefs.Add(uiItem);
-            }
-        }
-        else
+        InstantiateElements();
+        UpdateElements();
+
+        base.OpenScreen();
+    }
+
+
+    public override void CloseScreen()
+    {
+        base.CloseScreen();
+        _uiItemElements.Clear();
+        foreach (Transform child in _container.transform)
         {
-            gameObject.SetActive(false);
-            _uiItemRefs.Clear();
-            foreach (Transform child in _container.transform)
-            {
-                _instantiator.Dispose(child.gameObject);
-            }
+            _instantiator.Dispose(child.gameObject);
         }
     }
 
 
     public void DropItem()
     {
-        _inventory.DropItem(_chosenItemRef.Item, 1);
-        UpdateRef(_chosenItemRef);
-        if (_chosenItemRef == null)
+        _inventory.DropItem(_uiItemElements[_chosenSelectableItem], 1);
+        UpdateElements();
+        if (_chosenSelectableItem == null)
         {
             _dropButton.gameObject.SetActive(false);
         }
     }
 
 
-    private void UpdateRef(UIItemRef itemRef)
+    private void InstantiateElements()
     {
-        itemRef.UpdateData();
-        if (_inventory.GetItemCount(itemRef.Item) <= 0)
+        _uiItemElements.Clear();
+        foreach (KeyValuePair<ItemForm, int> item in _inventory.Items)
         {
-            _instantiator.Dispose(_chosenItemRef.gameObject);
-            _chosenItemRef = null;
+            UISelectableItem uiSelectableItem = _instantiator.Instantiate(_uiItemRefPrefab, _container).GetComponent<UISelectableItem>();
+            _uiItemElements.Add(uiSelectableItem, item.Key);
         }
     }
 
 
-    private void OnItemClicked(UIItemRef itemRef)
+    private void UpdateElements()
     {
-        SetActiveItemRef(itemRef);
-        _chosenItemRef = itemRef;
+        List<UISelectableItem> elementsToRemove = new List<UISelectableItem>();
+        foreach (KeyValuePair<UISelectableItem, ItemForm> pair in _uiItemElements)
+        {
+            int itemCount = _inventory.GetItemCount(pair.Value);
+            if (itemCount > 0)
+            {
+                pair.Key.InitElement(() => OnItemClicked(pair.Key), pair.Value.name, itemCount);
+            }
+            else
+            {
+                elementsToRemove.Add(pair.Key);
+            }
+        }
+
+        foreach (UISelectableItem element in elementsToRemove)
+        {
+            if (_chosenSelectableItem == element)
+            {
+                _chosenSelectableItem = null;
+            }
+
+            _uiItemElements.Remove(element);
+            _instantiator.Dispose(element.gameObject);
+        }
     }
 
 
-    private void SetActiveItemRef(UIItemRef newItemRef)
+    private void OnItemClicked(UISelectableItem selectableItem)
     {
-        if (newItemRef != _chosenItemRef)
+        SetActiveItemRef(selectableItem);
+        _chosenSelectableItem = selectableItem;
+    }
+
+
+    private void SetActiveItemRef(UISelectableItem newSelectableItem)
+    {
+        if (newSelectableItem != _chosenSelectableItem)
         {
-            if (_chosenItemRef != null)
+            if (_chosenSelectableItem != null)
             {
-                _chosenItemRef.SetActive(false);
+                _chosenSelectableItem.SetActive(false);
             }
-            newItemRef.SetActive(true);
+            newSelectableItem.SetActive(true);
             _dropButton.gameObject.SetActive(true);
         }
     }

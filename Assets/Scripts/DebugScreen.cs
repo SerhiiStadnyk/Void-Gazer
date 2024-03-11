@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Forms;
 using TMPro;
@@ -7,11 +8,8 @@ using UnityEngine.UI;
 using Utility;
 using Zenject;
 
-public class DevConsole : MonoBehaviour
+public class DebugScreen : BaseScreen, IInitable, IDisposable
 {
-    [SerializeField]
-    private GameObject _console;
-
     [SerializeField]
     private InputActionAsset _playerControls;
 
@@ -25,7 +23,6 @@ public class DevConsole : MonoBehaviour
     private Transform _container;
 
     private ItemForm _item;
-    private InputAction _openConsoleAction;
     private InputAction _spawnAtAction;
     private InputAction _cancelAction;
 
@@ -39,34 +36,25 @@ public class DevConsole : MonoBehaviour
     }
 
 
-    private void Awake()
+    void IInitable.Init()
     {
-        _openConsoleAction = _playerControls.FindActionMap(UtilityTermMap.Debug).FindAction(UtilityTermMap.DevConsole);
         _spawnAtAction = _playerControls.FindActionMap(UtilityTermMap.Debug).FindAction(UtilityTermMap.DebugSpawnAt);
         _cancelAction = _playerControls.FindActionMap(UtilityTermMap.Debug).FindAction(UtilityTermMap.DebugCancel);
     }
 
 
-    private void OnEnable()
-    {
-        RegisterInputActions();
-        _openConsoleAction.Enable();
-    }
-
-    private void OnDisable()
+    void IDisposable.Dispose()
     {
         UnregisterInputActions();
-        _openConsoleAction.Disable();
-        _spawnAtAction.Disable();
-        _cancelAction.Disable();
     }
 
 
     public void ChosePrefab(ItemForm item)
     {
-        OpenConsole(new InputAction.CallbackContext());
+        CloseScreen();
         _item = item;
 
+        RegisterInputActions();
         _spawnAtAction.Enable();
         _cancelAction.Enable();
     }
@@ -74,7 +62,6 @@ public class DevConsole : MonoBehaviour
 
     private void RegisterInputActions()
     {
-        _openConsoleAction.performed += OpenConsole;
         _spawnAtAction.performed += SpawnObject;
         _cancelAction.performed += CancelActionDebug;
     }
@@ -82,33 +69,31 @@ public class DevConsole : MonoBehaviour
 
     private void UnregisterInputActions()
     {
-        _openConsoleAction.performed -= OpenConsole;
         _spawnAtAction.performed -= SpawnObject;
         _cancelAction.performed -= CancelActionDebug;
     }
 
 
-    private void OpenConsole(InputAction.CallbackContext callbackContext)
+    public override void OpenScreen()
     {
-        if (!_console.activeSelf)
+        foreach (ItemForm item in _items)
         {
-            foreach (ItemForm item in _items)
-            {
-                GameObject obj = _instantiator.Instantiate(_uiPrefab, _container);
-                obj.GetComponent<Button>().onClick.AddListener(() => ChosePrefab(item));
-                obj.GetComponentInChildren<TMP_Text>().text = item.FormName;
-            }
-            _console.SetActive(true);
-            _spawnAtAction.Disable();
-            _cancelAction.Disable();
+            GameObject obj = _instantiator.Instantiate(_uiPrefab, _container);
+            obj.GetComponent<Button>().onClick.AddListener(() => ChosePrefab(item));
+            obj.GetComponentInChildren<TMP_Text>().text = item.FormName;
         }
-        else
+        _spawnAtAction?.Disable();
+        _cancelAction?.Disable();
+        base.OpenScreen();
+    }
+
+
+    public override void CloseScreen()
+    {
+        base.CloseScreen();
+        foreach (Transform child in _container.transform)
         {
-            foreach (Transform child in _container.transform)
-            {
-                _instantiator.Dispose(child.gameObject);
-            }
-            _console.SetActive(false);
+            _instantiator.Dispose(child.gameObject);
         }
     }
 
@@ -121,6 +106,7 @@ public class DevConsole : MonoBehaviour
 
     private void CancelActionDebug(InputAction.CallbackContext callbackContext)
     {
+        UnregisterInputActions();
         _spawnAtAction.Disable();
         _cancelAction.Disable();
     }
