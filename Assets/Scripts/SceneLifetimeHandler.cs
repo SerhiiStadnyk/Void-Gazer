@@ -30,6 +30,8 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
             Saveables.Clear();
             _saveManager.UnregisterLifetimeHandler(this);
         }
+
+        _sceneLifetimeHandlersContainer.UnregisterLifetimeHandler(this);
     }
 
 

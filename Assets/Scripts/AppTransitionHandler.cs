@@ -22,8 +22,9 @@ public class AppTransitionHandler : MonoBehaviour
     {
         Object sceneObject = AssetDatabase.LoadAssetAtPath<Object>(AssetDatabase.GUIDToAssetPath(sceneRef.SceneId));
 
-        foreach (SceneLifetimeHandler sceneLifetime in _sceneLifetimeHandlersContainer.LifetimeHandlers)
+        for (int i = _sceneLifetimeHandlersContainer.LifetimeHandlers.Count - 1; i >= 0; i--)
         {
+            SceneLifetimeHandler sceneLifetime = _sceneLifetimeHandlersContainer.LifetimeHandlers[i];
             sceneLifetime.DisposeScene(sceneLifetime.gameObject.scene);
         }
 
