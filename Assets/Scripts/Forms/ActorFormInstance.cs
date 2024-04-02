@@ -1,11 +1,12 @@
 using System;
 using EditorScripts;
 using Serializable;
+using Synchronizable;
 using UnityEngine;
 
 namespace Forms
 {
-    public class ActorFormInstance : GenericFormInstance<ActorForm>, IInitable, ISaveable
+    public class ActorFormInstance : GenericFormInstance<ActorForm>, IInitable, ISynchronizable
     {
         [SerializeField]
         private float _interactionRadius = 1f;
@@ -16,6 +17,8 @@ namespace Forms
         [SerializeField]
         [ReadOnly]
         private string _id;
+        
+        private string _testString;
 
         private CharacterController _charController;
         private Inventory _inventory;
@@ -63,17 +66,23 @@ namespace Forms
         }
 
 
-        void ISaveable.SaveData(Entry entry)
+        void ISynchronizable.SaveData(Entry entry)
         {
-            //entry.SetVector3(nameof(transform.position), transform.position);
-            entry.SetObject<Vector3>(nameof(transform.position), transform.position);
+            entry.SetObject(nameof(transform.position), transform.position);
+            //entry.SetObject(nameof(_testString), "CATo");
         }
 
 
-        void ISaveable.LoadData(Entry entry)
+        void ISynchronizable.LoadData(Entry entry)
         {
-            //transform.position = entry.GetVector3(nameof(transform.position));
             transform.position = entry.GetObject<Vector3>(nameof(transform.position));
+
+            foreach (var keyValuePair in entry.Objects.Dictionary)
+            {
+                Debug.LogWarning($"{keyValuePair.Key} {keyValuePair.Value}");
+            }
+            
+           //_testString = entry.GetObject<string>(nameof(_testString));
         }
     }
 }

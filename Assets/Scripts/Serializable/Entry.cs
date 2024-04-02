@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Serializable
 {
@@ -12,6 +13,8 @@ namespace Serializable
 
         [SerializeField]
         private SerializableDictionary<string, string> _objects = new SerializableDictionary<string, string>();
+
+        public SerializableDictionary<string, string> Objects => _objects;
 
         public string EntryId => _entryId;
 
@@ -34,9 +37,13 @@ namespace Serializable
         }
 
 
-        public void SetObject<T>(string fieldId, object value)
+        public void SetObject(string fieldId, object value)
         {
             string json = JsonUtility.ToJson(value);
+            if (string.IsNullOrEmpty(json) || json == "{}")
+            {
+                json = "{" + value + "}";
+            }
             _objects.AddOrUpdate(fieldId, json);
         }
 

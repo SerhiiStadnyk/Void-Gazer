@@ -1,47 +1,37 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 public class SceneLifetimeHandler : MonoBehaviour, IDisposable
 {
-    private List<ISaveable> _saveables;
     private List<IDisposable> _disposables;
+    private List<ISceneObjectsInit> _sceneObjectsInits;
 
-    private SaveManager _saveManager;
     private SceneLifetimeHandlersContainer _sceneLifetimeHandlersContainer;
-
-    public List<ISaveable> Saveables => _saveables;
 
 
     [Inject]
-    public void Inject(SaveManager saveManager, SceneLifetimeHandlersContainer sceneLifetimeHandlersContainer)
+    public void Inject(SceneLifetimeHandlersContainer sceneLifetimeHandlersContainer)
     {
-        _saveManager = saveManager;
         _sceneLifetimeHandlersContainer = sceneLifetimeHandlersContainer;
     }
 
 
     void IDisposable.Dispose()
     {
-        if (Saveables != null && Saveables.Count > 0)
-        {
-            Saveables.Clear();
-            _saveManager.UnregisterLifetimeHandler(this);
-        }
-
         _sceneLifetimeHandlersContainer.UnregisterLifetimeHandler(this);
     }
 
 
-    private void Awake()
+    protected void Awake()
     {
+        _sceneObjectsInits = GetComponents<ISceneObjectsInit>().ToList();
         _sceneLifetimeHandlersContainer.RegisterLifetimeHandler(this);
 
-        _saveables = new List<ISaveable>();
         _disposables = new List<IDisposable>();
-        List<IInitable> initables = new List<IInitable>();
+        var initables = new List<IInitable>();
 
         Component[] components = GetComponentsInChildren<Component>(true);
         foreach (Component component in components)
@@ -55,22 +45,11 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
             {
                 _disposables.Add(disposable);
             }
-
-            if (component is ISaveable saveable)
-            {
-                Saveables.Add(saveable);
-            }
         }
 
         foreach (IInitable initable in initables)
         {
             initable.Init();
-        }
-
-        if (Saveables != null && Saveables.Count > 0)
-        {
-            _saveManager.RegisterLifetimeHandler(this);
-            _saveManager.LoadSceneData(_saveables);
         }
     }
 
@@ -89,23 +68,9 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
             _disposables.Add(disposable);
         }
 
-        ISaveable[] saveables = obj.GetComponentsInChildren<ISaveable>(true);
-        foreach (ISaveable saveable in saveables)
+        foreach (ISceneObjectsInit sceneObjectsInit in _sceneObjectsInits)
         {
-            Saveables.Add(saveable);
-        }
-    }
-
-
-    public void DisposeScene(Scene scene)
-    {
-        gameObject.SetActive(false);
-        if (scene == gameObject.scene)
-        {
-            foreach (IDisposable disposable in _disposables)
-            {
-                disposable.Dispose();
-            }
+            sceneObjectsInit.InitObject(obj);
         }
     }
 
@@ -119,10 +84,22 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
             _disposables.Remove(disposable);
         }
 
-        ISaveable[] saveables = obj.GetComponentsInChildren<ISaveable>(true);
-        foreach (ISaveable saveable in saveables)
+        foreach (ISceneObjectsInit sceneObjectsInit in _sceneObjectsInits)
         {
-            Saveables.Remove(saveable);
+            sceneObjectsInit.DisposeObject(obj);
+        }
+    }
+
+
+    public void LeaveScene(bool unload)
+    {
+        gameObject.SetActive(false);
+        if (unload)
+        {
+            foreach (IDisposable disposable in _disposables)
+            {
+                disposable.Dispose();
+            }
         }
     }
 }

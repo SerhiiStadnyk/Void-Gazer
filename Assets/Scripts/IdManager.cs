@@ -3,13 +3,14 @@ using System.IO;
 using System.Linq;
 using EditorScripts;
 using Serializable;
+using Synchronizable;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "IdManager", menuName = "Game/Core/IdManager", order = 1)]
-public class IdManager : ScriptableObject, ISerializationCallbackReceiver, ISaveable
+public class IdManager : ScriptableObject, ISerializationCallbackReceiver, ISynchronizable
 {
     [SerializeField]
     [ReadOnly]
@@ -154,16 +155,16 @@ public class IdManager : ScriptableObject, ISerializationCallbackReceiver, ISave
     }
 
 
-    void ISaveable.SaveData(Entry entry)
+    void ISynchronizable.SaveData(Entry entry)
     {
         _dynamicGuidsList.Clear();
         _dynamicGuidsList.AddRange(_dynamicGuids);
 
-        entry.SetObject<string>(nameof(_dynamicGuidsList), _dynamicGuidsList);
+        entry.SetObject(nameof(_dynamicGuidsList), _dynamicGuidsList);
     }
 
 
-    void ISaveable.LoadData(Entry entry)
+    void ISynchronizable.LoadData(Entry entry)
     {
         Debug.LogWarning("Load IdManager");
         _dynamicGuidsList = entry.GetObjectList<string>(nameof(_dynamicGuidsList));

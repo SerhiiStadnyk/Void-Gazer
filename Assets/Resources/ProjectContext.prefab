@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainMenuScene: {fileID: 102900000, guid: 4a9a2c29241a62646897f531ca64b546, type: 3}
+  _globalSceneHandler: {fileID: 0}
 --- !u!114 &7657886310548534148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +190,7 @@ GameObject:
   - component: {fileID: 2053620838228369184}
   - component: {fileID: 5246962059658318407}
   - component: {fileID: 6382627647307284170}
+  - component: {fileID: 2908148491749863207}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -267,6 +269,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a226cffbc98e0640bf6a46f96d4ff80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneDataHandler: {fileID: 2908148491749863207}
+--- !u!114 &2908148491749863207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453486402211874444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8e5858cb4b4ea643b1dc356db60c527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneLifetimeHandler: {fileID: 6382627647307284170}
+  _id: Global
 --- !u!1 &8339098212044498124
 GameObject:
   m_ObjectHideFlags: 0

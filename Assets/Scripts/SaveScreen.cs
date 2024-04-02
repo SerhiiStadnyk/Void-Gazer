@@ -8,7 +8,6 @@ public class SaveScreen : BaseScreen
 
     [SerializeField]
     private UISelectableElementDefault _saveFileUiPrefab;
-    //TODO: Replace with universal choosable ui element
 
     private SaveFile _selectedSaveFile;
     private UISelectableElementDefault _selectedElementDefault;
@@ -60,7 +59,7 @@ public class SaveScreen : BaseScreen
         }
         else
         {
-            _saveManager.Save(_selectedSaveFile);
+            _saveManager.OverwriteSaveFile(_selectedSaveFile);
             //TODO: Add confirmation screen
         }
 

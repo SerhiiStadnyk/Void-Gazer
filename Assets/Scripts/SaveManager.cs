@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Serializable;
+using Synchronizable;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour, IInitable
@@ -12,7 +13,7 @@ public class SaveManager : MonoBehaviour, IInitable
     private SaveFile _sessionSaveFile;
 
     private List<SaveFile> _saveFiles = new List<SaveFile>();
-    private List<SceneLifetimeHandler> _lifetimeHandlers = new List<SceneLifetimeHandler>();
+    private List<SceneSyncHandler> _sceneSyncHandlers = new List<SceneSyncHandler>();
 
     private const string SAVE_FILES_ID = "SaveFiles";
 
@@ -29,26 +30,39 @@ public class SaveManager : MonoBehaviour, IInitable
             SaveFilesWrapper wrapper = JsonUtility.FromJson<SaveFilesWrapper>(data);
             _saveFiles = wrapper._saveFiles;
         }
+
+        _sessionSaveFile ??= new SaveFile();
     }
 
 
-    public void RegisterLifetimeHandler(SceneLifetimeHandler lifetimeHandler)
+    public void RegisterSyncHandler(SceneSyncHandler lifetimeHandler)
     {
-        _lifetimeHandlers.Add(lifetimeHandler);
+        _sceneSyncHandlers.Add(lifetimeHandler);
     }
 
 
-    public void UnregisterLifetimeHandler(SceneLifetimeHandler lifetimeHandler)
+    public void UnregisterSyncHandler(SceneSyncHandler lifetimeHandler)
     {
-        _lifetimeHandlers.Remove(lifetimeHandler);
+        _sceneSyncHandlers.Remove(lifetimeHandler);
     }
 
 
     public void CreateSaveFile(string saveName)
     {
-        SaveFile saveFile = new SaveFile();
+        SaveSessionData();
+        SaveFile saveFile = new SaveFile(_sessionSaveFile);
         _saveFiles.Add(saveFile);
-        Save(saveFile, saveName);
+        CreateSaveFile(saveFile, saveName);
+    }
+
+
+    public void OverwriteSaveFile(SaveFile oldSaveFile)
+    {
+        SaveSessionData();
+        SaveFile saveFile = new SaveFile(_sessionSaveFile);
+        int oldFileIndex =_saveFiles.IndexOf(oldSaveFile);
+        _saveFiles[oldFileIndex] = saveFile;
+        CreateSaveFile(saveFile, oldSaveFile.Name);
     }
 
 
@@ -59,30 +73,66 @@ public class SaveManager : MonoBehaviour, IInitable
     }
 
 
-    public void Save(SaveFile saveFile, string saveName = null)
+    public void LoadSceneData(SceneSyncHandler sceneSyncHandler)
     {
-        saveName ??= saveFile.Name;
-
-        int saveablesCount = _lifetimeHandlers.SelectMany(handler => handler.Saveables).Count();
-        saveFile.InitSave(saveablesCount, saveName);
-
-        ISaveable idManager = _idManager;
-        Entry idManagerEntry = new Entry(idManager.Id);
-        idManager.SaveData(idManagerEntry);
-        saveFile.Register(idManagerEntry);
-
-        foreach (SceneLifetimeHandler lifetimeHandler in _lifetimeHandlers)
+        if (_sessionSaveFile != null && _sessionSaveFile.Entries != null && _sessionSaveFile.Entries.Count() != 0)
         {
-            foreach (ISaveable saveable in lifetimeHandler.Saveables)
+            ISynchronizable sceneDataHandlerSynchronizable = sceneSyncHandler;
+            if (_sessionSaveFile.Entries.ContainsKey(sceneDataHandlerSynchronizable.Id))
             {
-                Entry entry = new Entry(saveable.Id);
-                saveable.SaveData(entry);
-                saveFile.Register(entry);
+                Entry sceneDataEntry = _sessionSaveFile.Entries[sceneDataHandlerSynchronizable.Id];
+                sceneDataEntry.Deserialize();
+                sceneDataHandlerSynchronizable.LoadData(sceneDataEntry);
+                sceneSyncHandler.AltLoad(_sessionSaveFile);
+
+                foreach (var entryPair in sceneDataEntry.Objects)
+                {
+                    Debug.LogWarning($"Entry Data: {entryPair.Key} {entryPair.Value}");
+                }
             }
         }
+    }
 
+
+    public void SaveObjectData(ISynchronizable synchronizable)
+    {
+        Entry objectDataEntry = new Entry(synchronizable.Id);
+        synchronizable.SaveData(objectDataEntry);
+        _sessionSaveFile.Register(objectDataEntry);
+    }
+
+
+    private void SaveSessionData()
+    {
+        SaveGlobalData();
+        foreach (SceneSyncHandler sceneSyncHandler in _sceneSyncHandlers)
+        {
+            SaveObjectData(sceneSyncHandler);
+            sceneSyncHandler.AltSave(this);
+        }
+    }
+
+
+    private void CreateSaveFile(SaveFile saveFile, string saveName = null)
+    {
+        saveFile.InitSave(0, saveName);
         saveFile.Serialize();
         UpdateSaveFiles();
+    }
+
+
+    private void SaveGlobalData()
+    {
+        SaveObjectData(_idManager);
+    }
+
+
+    public void SaveSceneData(SceneSyncHandler sceneSync)
+    {
+        ISynchronizable sceneDataSynchronizable = sceneSync;
+        Entry sceneDataEntry = new Entry(sceneDataSynchronizable.Id);
+        sceneDataSynchronizable.SaveData(sceneDataEntry);
+        _sessionSaveFile.Register(sceneDataEntry);
     }
 
 
@@ -90,28 +140,7 @@ public class SaveManager : MonoBehaviour, IInitable
     {
         saveFile.Deserialize();
         _sessionSaveFile = saveFile;
-    }
-
-
-    public void LoadSceneData(List<ISaveable> saveables)
-    {
-        if (_sessionSaveFile != null)
-        {
-            foreach (ISaveable saveable in saveables)
-            {
-                if (_sessionSaveFile.Entries.ContainsKey(saveable.Id))
-                {
-                    Entry entry = _sessionSaveFile.Entries[saveable.Id];
-                    entry.Deserialize();
-                    saveable.LoadData(entry);
-                }
-                else
-                {
-                    //TODO: Dispose objects that are not saved since they been disposed during gameplay
-                    Debug.LogWarning("Dispose object");
-                }
-            }
-        }
+        //TODO: Load active scene in save file
     }
 
 
@@ -123,7 +152,7 @@ public class SaveManager : MonoBehaviour, IInitable
     }
 
 
-    [System.Serializable]
+    [Serializable]
     private class SaveFilesWrapper
     {
         [SerializeField]
@@ -131,7 +160,7 @@ public class SaveManager : MonoBehaviour, IInitable
 
         public SaveFilesWrapper(List<SaveFile> saveFiles)
         {
-            this._saveFiles = saveFiles;
+            _saveFiles = saveFiles;
         }
     }
 }
@@ -154,13 +183,25 @@ public class SaveFile
     public DateTime DateTime => _dateTime;
 
 
+    public SaveFile()
+    {
+        _entries = new SerializableDictionary<string, Entry>();
+    }
+
+
+    public SaveFile(SaveFile value)
+    {
+        _name = value.Name;
+        _entries = new SerializableDictionary<string, Entry>(value.Entries.Dictionary);
+        _dateTime = value.DateTime;
+    }
+
+
     public void InitSave(int count, string name)
     {
         _name = name;
         _dateTime = DateTime.Now;
-
-        _entries?.Clear();
-        _entries = new SerializableDictionary<string, Entry>(count);
+        _entries ??= new SerializableDictionary<string, Entry>(count);
     }
 
 

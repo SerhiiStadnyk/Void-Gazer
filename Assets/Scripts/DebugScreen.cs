@@ -17,22 +17,30 @@ public class DebugScreen : BaseScreen, IInitable, IDisposable
     private List<ItemForm> _items;
 
     [SerializeField]
+    private List<SceneReference> _sceneRefs;
+
+    [SerializeField]
     private GameObject _uiPrefab;
 
     [SerializeField]
-    private Transform _container;
+    private Transform _itemsContainer;
+
+    [SerializeField]
+    private Transform _scenesContainer;
 
     private ItemForm _item;
     private InputAction _spawnAtAction;
     private InputAction _cancelAction;
 
     private Instantiator _instantiator;
+    private AppTransitionHandler _appTransitionHandler;
 
 
     [Inject]
-    public void Inject(Instantiator instantiator)
+    public void Inject(Instantiator instantiator, AppTransitionHandler appTransitionHandler)
     {
         _instantiator = instantiator;
+        _appTransitionHandler = appTransitionHandler;
     }
 
 
@@ -76,25 +84,58 @@ public class DebugScreen : BaseScreen, IInitable, IDisposable
 
     public override void OpenScreen()
     {
-        foreach (ItemForm item in _items)
-        {
-            GameObject obj = _instantiator.Instantiate(_uiPrefab, _container);
-            obj.GetComponent<Button>().onClick.AddListener(() => ChosePrefab(item));
-            obj.GetComponentInChildren<TMP_Text>().text = item.FormName;
-        }
         _spawnAtAction?.Disable();
         _cancelAction?.Disable();
         base.OpenScreen();
     }
 
 
-    public override void CloseScreen()
+    public void OpenSpawnItemScreen()
     {
-        base.CloseScreen();
-        foreach (Transform child in _container.transform)
+        foreach (ItemForm item in _items)
+        {
+            GameObject obj = _instantiator.Instantiate(_uiPrefab, _itemsContainer);
+            obj.GetComponent<Button>().onClick.AddListener(() => ChosePrefab(item));
+            obj.GetComponentInChildren<TMP_Text>().text = item.FormName;
+        }
+    }
+
+
+    public void OpenChangeSceneScreen()
+    {
+        foreach (SceneReference sceneReference in _sceneRefs)
+        {
+            GameObject obj = _instantiator.Instantiate(_uiPrefab, _scenesContainer);
+            obj.GetComponent<Button>().onClick.AddListener(() => ChangeScene(sceneReference));
+            obj.GetComponentInChildren<TMP_Text>().text = sceneReference.name;
+        }
+    }
+
+
+    private void ChangeScene(SceneReference sceneReference)
+    {
+        _appTransitionHandler.SwitchScene(sceneReference);
+    }
+
+
+    public void CleanScreens()
+    {
+        foreach (Transform child in _itemsContainer)
         {
             _instantiator.Dispose(child.gameObject);
         }
+
+        foreach (Transform child in _scenesContainer)
+        {
+            _instantiator.Dispose(child.gameObject);
+        }
+    }
+
+
+    public override void CloseScreen()
+    {
+        base.CloseScreen();
+        CleanScreens();
     }
 
 

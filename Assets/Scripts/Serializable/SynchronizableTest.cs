@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using EditorScripts;
+using Synchronizable;
 using UnityEngine;
 
 namespace Serializable
 {
-    public class SaveableTest : MonoBehaviour, ISaveable
+    public class SynchronizableTest : MonoBehaviour, ISynchronizable
     {
         [SerializeField]
         private List<string> _testList;
@@ -25,7 +26,7 @@ namespace Serializable
         }
 
 
-        void ISaveable.SaveData(Entry entry)
+        void ISynchronizable.SaveData(Entry entry)
         {
             entry.SetObjectList(nameof(_testList), _testList);
 
@@ -38,7 +39,7 @@ namespace Serializable
         }
 
 
-        void ISaveable.LoadData(Entry entry)
+        void ISynchronizable.LoadData(Entry entry)
         {
             _testList = entry.GetObjectList<string>(nameof(_testList));
 
