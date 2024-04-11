@@ -2,7 +2,7 @@ using Serializable;
 
 namespace Synchronizable
 {
-    public interface ISynchronizable: IIdHolder
+    public interface ISynchronizable: IInstanceIdHolder
     {
         public void SaveData(Entry entry);
 

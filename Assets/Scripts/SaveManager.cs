@@ -78,17 +78,11 @@ public class SaveManager : MonoBehaviour, IInitable
         if (_sessionSaveFile != null && _sessionSaveFile.Entries != null && _sessionSaveFile.Entries.Count() != 0)
         {
             ISynchronizable sceneDataHandlerSynchronizable = sceneSyncHandler;
-            if (_sessionSaveFile.Entries.ContainsKey(sceneDataHandlerSynchronizable.Id))
+            if (_sessionSaveFile.Entries.ContainsKey(sceneDataHandlerSynchronizable.InstanceId))
             {
-                Entry sceneDataEntry = _sessionSaveFile.Entries[sceneDataHandlerSynchronizable.Id];
+                Entry sceneDataEntry = _sessionSaveFile.Entries[sceneDataHandlerSynchronizable.InstanceId];
                 sceneDataEntry.Deserialize();
                 sceneDataHandlerSynchronizable.LoadData(sceneDataEntry);
-                sceneSyncHandler.AltLoad(_sessionSaveFile);
-
-                foreach (var entryPair in sceneDataEntry.Objects)
-                {
-                    Debug.LogWarning($"Entry Data: {entryPair.Key} {entryPair.Value}");
-                }
             }
         }
     }
@@ -96,7 +90,7 @@ public class SaveManager : MonoBehaviour, IInitable
 
     public void SaveObjectData(ISynchronizable synchronizable)
     {
-        Entry objectDataEntry = new Entry(synchronizable.Id);
+        Entry objectDataEntry = new Entry(synchronizable.InstanceId);
         synchronizable.SaveData(objectDataEntry);
         _sessionSaveFile.Register(objectDataEntry);
     }
@@ -108,8 +102,14 @@ public class SaveManager : MonoBehaviour, IInitable
         foreach (SceneSyncHandler sceneSyncHandler in _sceneSyncHandlers)
         {
             SaveObjectData(sceneSyncHandler);
-            sceneSyncHandler.AltSave(this);
         }
+    }
+
+
+    private void SaveGlobalData()
+    {
+        //TODO: Improve this
+        SaveObjectData(_idManager);
     }
 
 
@@ -121,16 +121,10 @@ public class SaveManager : MonoBehaviour, IInitable
     }
 
 
-    private void SaveGlobalData()
-    {
-        SaveObjectData(_idManager);
-    }
-
-
     public void SaveSceneData(SceneSyncHandler sceneSync)
     {
         ISynchronizable sceneDataSynchronizable = sceneSync;
-        Entry sceneDataEntry = new Entry(sceneDataSynchronizable.Id);
+        Entry sceneDataEntry = new Entry(sceneDataSynchronizable.InstanceId);
         sceneDataSynchronizable.SaveData(sceneDataEntry);
         _sessionSaveFile.Register(sceneDataEntry);
     }

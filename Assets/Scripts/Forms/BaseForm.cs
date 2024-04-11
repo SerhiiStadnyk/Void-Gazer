@@ -5,8 +5,8 @@ namespace Forms
     public abstract class BaseForm : ScriptableObject
     {
         [SerializeField]
-        private string _formName;
+        private string _formId;
 
-        public string FormName => _formName;
+        public string FormId => _formId;
     }
 }

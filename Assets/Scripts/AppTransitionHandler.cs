@@ -35,7 +35,7 @@ public class AppTransitionHandler : MonoBehaviour
             SceneLifetimeHandler sceneLifetime = _sceneLifetimeHandlersContainer.LifetimeHandlers[i];
             if (sceneLifetime != _globalSceneHandler)
             {
-                sceneLifetime.LeaveScene(true);
+                sceneLifetime.CloseScene(SceneLifetimeHandler.SceneClosingType.Discard);
             }
         }
 
@@ -53,7 +53,7 @@ public class AppTransitionHandler : MonoBehaviour
             SceneLifetimeHandler sceneLifetime = _sceneLifetimeHandlersContainer.LifetimeHandlers[i];
             if (sceneLifetime != _globalSceneHandler)
             {
-                sceneLifetime.LeaveScene(true);
+                sceneLifetime.CloseScene(SceneLifetimeHandler.SceneClosingType.Unload);
             }
         }
 

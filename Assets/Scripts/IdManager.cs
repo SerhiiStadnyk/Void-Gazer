@@ -20,8 +20,6 @@ public class IdManager : ScriptableObject, ISerializationCallbackReceiver, ISync
     [ReadOnly]
     private List<string> _dynamicGuidsList = new List<string>();
 
-    private string _id = nameof(IdManager);
-
     private HashSet<string> _staticGuids = new HashSet<string>();
     private HashSet<string> _dynamicGuids = new HashSet<string>();
 
@@ -58,22 +56,22 @@ public class IdManager : ScriptableObject, ISerializationCallbackReceiver, ISync
         {
             Scene scene = EditorSceneManager.OpenScene(scenePath);
 
-            IIdHolder[] idHolders = FindObjectsByType<Component>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-                .OfType<IIdHolder>()
+            IInstanceIdHolder[] idHolders = FindObjectsByType<Component>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                .OfType<IInstanceIdHolder>()
                 .ToArray();
 
-            foreach (IIdHolder idHolder in idHolders)
+            foreach (IInstanceIdHolder idHolder in idHolders)
             {
-                if (string.IsNullOrEmpty(idHolder.Id))
+                if (string.IsNullOrEmpty(idHolder.InstanceId))
                 {
                     string guid = Instance.GenerateGuid().ToString();
-                    idHolder.Id = guid;
+                    idHolder.InstanceId = guid;
                     Instance._staticGuids.Add(guid);
                     EditorUtility.SetDirty(idHolder as Component);
                 }
                 else
                 {
-                    Instance._staticGuids.Add(idHolder.Id);
+                    Instance._staticGuids.Add(idHolder.InstanceId);
                 }
             }
             EditorSceneManager.SaveScene(scene);
@@ -148,10 +146,10 @@ public class IdManager : ScriptableObject, ISerializationCallbackReceiver, ISync
     }
 
 
-    string IIdHolder.Id
+    string IInstanceIdHolder.InstanceId
     {
-        get => _id;
-        set => _id = value;
+        get => nameof(IdManager);
+        set => Debug.LogError($"InstanceId of {nameof(IdManager)} should be immutable");
     }
 
 

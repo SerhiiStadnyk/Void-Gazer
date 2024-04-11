@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 public class GameInstaller : MonoInstaller
@@ -16,7 +15,6 @@ public class GameInstaller : MonoInstaller
     [SerializeField]
     private InventoryScreen _inventoryScreen;
 
-    [FormerlySerializedAs("_objectLifetimeHandler")]
     [SerializeField]
     private SceneLifetimeHandler _sceneLifetimeHandler;
 

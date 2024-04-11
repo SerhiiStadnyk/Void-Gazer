@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5cba213eeed7e449284788d9295a20, type: 3}
   m_Name: ObjectForm_WallA
   m_EditorClassIdentifier: 
-  _formName: WallA
+  _formId: Wall_A

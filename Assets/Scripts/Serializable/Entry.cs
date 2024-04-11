@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Serializable
 {
@@ -37,13 +36,20 @@ namespace Serializable
         }
 
 
-        public void SetObject(string fieldId, object value)
+        [Serializable]
+        private class ObjectWrapper<T>
         {
-            string json = JsonUtility.ToJson(value);
-            if (string.IsNullOrEmpty(json) || json == "{}")
+            public T value;
+        }
+
+
+        public void SetObject<T>(string fieldId, T value)
+        {
+            ObjectWrapper<T> wrapper = new ObjectWrapper<T>
             {
-                json = "{" + value + "}";
-            }
+                value = value
+            };
+            string json = JsonUtility.ToJson(wrapper);
             _objects.AddOrUpdate(fieldId, json);
         }
 
@@ -53,7 +59,8 @@ namespace Serializable
             T result = default;
             if (_objects.ContainsKey(fieldId))
             {
-                result = JsonUtility.FromJson<T>(_objects[fieldId]);
+                ObjectWrapper<T> wrapper = JsonUtility.FromJson<ObjectWrapper<T>>(_objects[fieldId]);
+                result = wrapper.value;
             }
             return result;
         }

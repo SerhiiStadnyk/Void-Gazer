@@ -1,3 +1,4 @@
+using System;
 using Forms;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,39 +21,40 @@ public partial class Instantiator : MonoBehaviour
     }
 
 
-    protected GameObject InstantiateAtPointerInternal(GameObject prefab)
+    protected GameObject InstantiateAtPointerInternal(GameObject prefab, Action<GameObject> onBeforeInitObject = null)
     {
         Vector3 pointerPos = Mouse.current.position.ReadValue();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
         pointerPos.y = 0;
-        return Instantiate(prefab, pointerPos, Quaternion.identity, _defaultContainer);
+        return InstantiateInternal(prefab, pointerPos, Quaternion.identity, _defaultContainer, onBeforeInitObject);
     }
 
 
     public GameObject Instantiate(GameObject prefab)
     {
-        return Instantiate(prefab, Vector3.zero, Quaternion.identity, _defaultContainer);
+        return InstantiateInternal(prefab, Vector3.zero, Quaternion.identity, _defaultContainer);
     }
 
 
     public GameObject Instantiate(GameObject prefab, Transform parent)
     {
-        return Instantiate(prefab, Vector3.zero, Quaternion.identity, parent);
+        return InstantiateInternal(prefab, Vector3.zero, Quaternion.identity, parent);
     }
 
 
     public GameObject Instantiate(GameObject prefab, Vector3 pos)
     {
-        return Instantiate(prefab, pos, Quaternion.identity, _defaultContainer);
+        return InstantiateInternal(prefab, pos, Quaternion.identity, _defaultContainer);
     }
 
 
-    public GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion rotation, Transform parent)
+    protected GameObject InstantiateInternal(GameObject prefab, Vector3 pos, Quaternion rotation, Transform parent, Action<GameObject> onBeforeInitObject = null)
     {
         GameObject obj = _container.InstantiatePrefab(prefab, parent);
         obj.transform.position = pos;
         obj.transform.rotation = rotation;
 
+        onBeforeInitObject?.Invoke(obj);
         _sceneLifetimeHandler.InitObject(obj);
 
         return obj;

@@ -75,7 +75,8 @@ public class Inventory : MonoBehaviour
     public void DropItem(ItemForm item, int quantity)
     {
         int removedCount = RemoveItem(item, quantity);
-        _instantiator.Instantiate(item, removedCount, transform.position);
+        GameObject itemInstance = _instantiator.Instantiate(item, removedCount);
+        itemInstance.transform.position = transform.position;
     }
 
 

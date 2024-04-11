@@ -1,9 +1,11 @@
+using Serializable;
+using Synchronizable;
 using UnityEngine;
 using Zenject;
 
 namespace Forms
 {
-    public class ItemFormInstance : GenericFormInstance<ItemForm>, IInteractable
+    public class ItemFormInstance : GenericFormInstance<ItemForm>, IInteractable, ISynchronizable
     {
         [SerializeField]
         private int _quantity;
@@ -28,6 +30,21 @@ namespace Forms
             {
                 _instantiator.Dispose(this);
             }
+        }
+
+
+        void ISynchronizable.SaveData(Entry entry)
+        {
+            entry.SetObject(nameof(InstanceId), InstanceId);
+            entry.SetObject(nameof(Form.FormId), Form.FormId);
+            entry.SetObject(nameof(transform.position), transform.position);
+        }
+
+
+        void ISynchronizable.LoadData(Entry entry)
+        {
+            InstanceId = entry.GetObject<string>(nameof(InstanceId));
+            transform.position = entry.GetObject<Vector3>(nameof(transform.position));
         }
     }
 }

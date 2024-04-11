@@ -96,7 +96,7 @@ public class DebugScreen : BaseScreen, IInitable, IDisposable
         {
             GameObject obj = _instantiator.Instantiate(_uiPrefab, _itemsContainer);
             obj.GetComponent<Button>().onClick.AddListener(() => ChosePrefab(item));
-            obj.GetComponentInChildren<TMP_Text>().text = item.FormName;
+            obj.GetComponentInChildren<TMP_Text>().text = item.FormId;
         }
     }
 

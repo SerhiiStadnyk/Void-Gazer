@@ -8,5 +8,7 @@ namespace Forms
         protected T _form;
 
         public T Form => _form;
+
+        public override BaseForm BaseForm => _form;
     }
 }

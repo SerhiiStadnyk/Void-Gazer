@@ -11,6 +11,14 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
 
     private SceneLifetimeHandlersContainer _sceneLifetimeHandlersContainer;
 
+    public enum SceneClosingType
+    {
+        Discard,
+        Unload
+    }
+
+    public event Action<SceneClosingType> SceneClosing;
+
 
     [Inject]
     public void Inject(SceneLifetimeHandlersContainer sceneLifetimeHandlersContainer)
@@ -91,15 +99,14 @@ public class SceneLifetimeHandler : MonoBehaviour, IDisposable
     }
 
 
-    public void LeaveScene(bool unload)
+    public void CloseScene(SceneClosingType closingType)
     {
+        SceneClosing?.Invoke(closingType);
+
         gameObject.SetActive(false);
-        if (unload)
+        foreach (IDisposable disposable in _disposables)
         {
-            foreach (IDisposable disposable in _disposables)
-            {
-                disposable.Dispose();
-            }
+            disposable.Dispose();
         }
     }
 }

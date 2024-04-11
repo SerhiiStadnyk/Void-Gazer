@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f75941aa2f3b8642bdaf187bae8de16, type: 3}
   m_Name: ActorForm_Player
   m_EditorClassIdentifier: 
-  _formName: Player
+  _formId: Player

@@ -1,5 +1,4 @@
 using System;
-using EditorScripts;
 using Serializable;
 using Synchronizable;
 using UnityEngine;
@@ -14,12 +13,6 @@ namespace Forms
         [SerializeField]
         private int _interactableLayerIndex;
 
-        [SerializeField]
-        [ReadOnly]
-        private string _id;
-        
-        private string _testString;
-
         private CharacterController _charController;
         private Inventory _inventory;
 
@@ -27,12 +20,6 @@ namespace Forms
 
         public CharacterController CharacterController => _charController;
         public Inventory ActorInventory => _inventory;
-
-        public string Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
 
 
         void IInitable.Init()
@@ -68,21 +55,16 @@ namespace Forms
 
         void ISynchronizable.SaveData(Entry entry)
         {
+            entry.SetObject(nameof(InstanceId), InstanceId);
+            entry.SetObject(nameof(Form.FormId), Form.FormId);
             entry.SetObject(nameof(transform.position), transform.position);
-            //entry.SetObject(nameof(_testString), "CATo");
         }
 
 
         void ISynchronizable.LoadData(Entry entry)
         {
+            InstanceId = entry.GetObject<string>(nameof(InstanceId));
             transform.position = entry.GetObject<Vector3>(nameof(transform.position));
-
-            foreach (var keyValuePair in entry.Objects.Dictionary)
-            {
-                Debug.LogWarning($"{keyValuePair.Key} {keyValuePair.Value}");
-            }
-            
-           //_testString = entry.GetObject<string>(nameof(_testString));
         }
     }
 }

@@ -16,13 +16,13 @@ namespace Serializable
 
         [SerializeField]
         [ReadOnly]
-        private string _id;
+        private string _instanceId;
 
 
-        string IIdHolder.Id
+        string IInstanceIdHolder.InstanceId
         {
-            get => _id;
-            set => _id = value;
+            get => _instanceId;
+            set => _instanceId = value;
         }
 
 
