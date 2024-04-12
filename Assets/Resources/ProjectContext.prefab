@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d244b5a0dda6b4ab4913d103ff130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainMenuScene: {fileID: 102900000, guid: 4a9a2c29241a62646897f531ca64b546, type: 3}
-  _globalSceneHandler: {fileID: 0}
+  _mainMenuScene: {fileID: 11400000, guid: 4300b00711130e24c87d46fdeb996c9d, type: 2}
+  _globalSceneHandler: {fileID: 6382627647307284170}
 --- !u!114 &7657886310548534148
 MonoBehaviour:
   m_ObjectHideFlags: 0
