@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f5cba213eeed7e449284788d9295a20, type: 3}
-  m_Name: ObjectForm_WallA
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Game_Group_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  _formId: Wall_A
-  _prefab: {fileID: 7409807926613276693, guid: 2e617ad63c74bee4cb32244910a8b1e1, type: 3}
+  m_Group: {fileID: 11400000, guid: d8316eb413169444a828aae4b8a73573, type: 2}
+  m_StaticContent: 0

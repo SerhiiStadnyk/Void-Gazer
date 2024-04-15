@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ActorForm_Player
   m_EditorClassIdentifier: 
   _formId: Player
+  _prefab: {fileID: 1215032925303339924, guid: acb3e4c2ed831134c9b9ddd56aeb1d99, type: 3}

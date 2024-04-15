@@ -1,3 +1,4 @@
+using Core.Runtime.Maps;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,9 @@ namespace Core.Runtime
         [SerializeField]
         private IdManager _idManager;
 
+        [SerializeField]
+        private FormsCollection _formsCollection;
+
 
         public override void InstallBindings()
         {
@@ -24,6 +28,7 @@ namespace Core.Runtime
             Container.BindInstance(_saveManager).AsSingle();
             Container.BindInstance(_sceneLifetimeHandler).AsSingle();
             Container.BindInstance(_idManager).AsSingle();
+            Container.BindInstance(_formsCollection).AsSingle();
 
             Container.BindInstance(new SceneLifetimeHandlersContainer()).AsSingle();
         }

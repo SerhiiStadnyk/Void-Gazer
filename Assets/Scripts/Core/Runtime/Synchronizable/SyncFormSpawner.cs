@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Runtime.Forms;
+using Core.Runtime.Maps;
 using Core.Runtime.Serializable;
 using UnityEngine;
 using Zenject;
@@ -8,17 +9,16 @@ namespace Core.Runtime.Synchronizable
 {
     public class SyncFormSpawner : MonoBehaviour
     {
-        [SerializeField]
-        private FormsMap _formsMap;
-
         private Instantiator _instantiator;
+        private FormsCollection _formsCollection;
         private SceneSyncHandler _sceneSyncHandler;
 
 
         [Inject]
-        public void Inject(Instantiator instantiator)
+        public void Inject(Instantiator instantiator, FormsCollection formsCollection)
         {
             _instantiator = instantiator;
+            _formsCollection = formsCollection;
         }
 
 
@@ -41,7 +41,7 @@ namespace Core.Runtime.Synchronizable
                     if (!string.IsNullOrEmpty(formId))
                     {
                         string instanceId = pair.Value.GetObject<string>(nameof(IInstanceIdHolder.InstanceId));
-                        BaseForm form = _formsMap.GetForm(formId);
+                        BaseForm form = _formsCollection.GetForm<BaseForm>(formId);
                         _instantiator.Instantiate(form, instanceId);
                     }
                 }

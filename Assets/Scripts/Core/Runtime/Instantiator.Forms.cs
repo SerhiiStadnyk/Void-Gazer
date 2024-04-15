@@ -1,4 +1,5 @@
 using Core.Runtime.Forms;
+using Core.Runtime.Maps;
 using UnityEngine;
 using Zenject;
 
@@ -6,9 +7,6 @@ namespace Core.Runtime
 {
     public partial class Instantiator
     {
-        [SerializeField]
-        private FormsMap _formsMap;
-
         private IdManager _idManager;
 
 
@@ -21,21 +19,21 @@ namespace Core.Runtime
 
         public GameObject Instantiate(BaseForm form, string id = null)
         {
-            GameObject prefab = _formsMap.GetFormPrefab(form);
+            GameObject prefab = form.Prefab;
             return InstantiateInternal(prefab, Vector3.zero, Quaternion.identity, _defaultContainer, (obj) => SetInstanceId(obj, id));
         }
 
 
         public GameObject Instantiate(BaseForm form, int quantity, string id = null)
         {
-            GameObject prefab = _formsMap.GetFormPrefab(form);
+            GameObject prefab = form.Prefab;
             return InstantiateInternal(prefab, Vector3.zero, Quaternion.identity, _defaultContainer, (obj) => SetInstanceId(obj, id));
         }
 
 
         public GameObject InstantiateAtPointer(BaseForm form)
         {
-            GameObject prefab = _formsMap.GetFormPrefab(form);
+            GameObject prefab = form.Prefab;
             return InstantiateAtPointerInternal(prefab, (obj) => SetInstanceId(obj));
         }
 

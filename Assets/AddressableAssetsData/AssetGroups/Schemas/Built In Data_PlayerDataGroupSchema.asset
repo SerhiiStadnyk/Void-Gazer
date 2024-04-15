@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f5cba213eeed7e449284788d9295a20, type: 3}
-  m_Name: ObjectForm_WallA
+  m_Script: {fileID: 11500000, guid: b1487f5d688e4f94f828f879d599dbdc, type: 3}
+  m_Name: Built In Data_PlayerDataGroupSchema
   m_EditorClassIdentifier: 
-  _formId: Wall_A
-  _prefab: {fileID: 7409807926613276693, guid: 2e617ad63c74bee4cb32244910a8b1e1, type: 3}
+  m_Group: {fileID: 11400000, guid: caa8d827b50f67a4f92aa16c7acf7cda, type: 2}
+  m_IncludeResourcesFolders: 1
+  m_IncludeBuildSettingsScenes: 1

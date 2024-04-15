@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: ItemForm_AsteroidPieceB
   m_EditorClassIdentifier: 
   _formId: Asteroid_B
+  _prefab: {fileID: 2839759360689607895, guid: 88d77cd77481b7647ad5d1cf04f26a35, type: 3}
   _pickUpSound: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   _itemIcon: {fileID: 21300000, guid: 6886db5fac1305b4d82a95ca744de0c7, type: 3}

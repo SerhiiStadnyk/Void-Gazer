@@ -5,6 +5,7 @@ namespace Core.Runtime.Forms
     [CreateAssetMenu(fileName = "ItemForm", menuName = "Game/Forms/Item", order = 1)]
     public class ItemForm : BaseForm
     {
+        [Space(10)]
         [SerializeField]
         private AudioClip _pickUpSound;
 
