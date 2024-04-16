@@ -27,7 +27,7 @@ namespace Core.Runtime
 
         private static IdManager _instance;
 
-        private const string Scene_Folder_Path = "Assets/Data/Scenes";
+        private const string Scene_Folder_Path = "Assets/Data/Game/Runtime/Scenes";
 
 
         public static IdManager Instance

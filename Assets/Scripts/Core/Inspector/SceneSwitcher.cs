@@ -8,9 +8,9 @@ namespace Core.Inspector
     [InitializeOnLoad]
     public class SceneSwitcher
     {
-        private static string _sceneEntryPoint = "Assets/Data/Scenes/Scene_EntryPoint.unity";
-        private static string _sceneMainMenu = "Assets/Data/Scenes/Scene_MainMenu.unity";
-        private static string _sceneGame = "Assets/Data/Scenes/Scene_Game.unity";
+        private static string _sceneEntryPoint = "Assets/Data/Game/Runtime/Scenes/Scene_EntryPoint.unity";
+        private static string _sceneMainMenu = "Assets/Data/Game/Runtime/Scenes/Scene_MainMenu.unity";
+        private static string _sceneGame = "Assets/Data/Game/Runtime/Scenes/Scene_Game.unity";
 
         private static string _prefabGlobalContext = "Assets/Resources/ProjectContext.prefab";
 

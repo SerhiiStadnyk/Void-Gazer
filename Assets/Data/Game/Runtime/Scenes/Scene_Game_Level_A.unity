@@ -2977,7 +2977,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultContainer: {fileID: 2107668063}
-  _formsMap: {fileID: 11400000, guid: 20c61704a81aeed479cd84353f81ba99, type: 2}
 --- !u!1001 &1325826698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4198,7 +4197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a1a5d13407300409296d6e6b1b17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _formsMap: {fileID: 11400000, guid: 20c61704a81aeed479cd84353f81ba99, type: 2}
 --- !u!1 &2137395318
 GameObject:
   m_ObjectHideFlags: 0
