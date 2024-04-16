@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SceneRef_Game_Level_A
   m_EditorClassIdentifier: 
   _sceneId: bdeb390ef5d004e438f734713294806a
+  _scenePath: Assets/Data/Game/Runtime/Scenes/GameLocations/Scene_Game_Level_A.unity

@@ -4,21 +4,15 @@ using UnityEditor;
 namespace Core.Inspector
 {
     [CustomEditor(typeof(SceneReference))]
-    public class SceneReferenceEditor : UnityEditor.Editor
+    public class SceneReferenceEditor : Editor
     {
-        private SerializedProperty _sceneIdProperty;
-        private SceneAsset _sceneAsset;
+        private SerializedProperty _scenePathProperty;
 
 
         public void OnEnable()
         {
-            _sceneIdProperty = serializedObject.FindProperty("_sceneId");
+            _scenePathProperty = serializedObject.FindProperty("_scenePath");
             serializedObject.Update();
-
-            if (_sceneIdProperty.stringValue != null)
-            {
-                _sceneAsset = AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(_sceneIdProperty.stringValue));
-            }
         }
 
 
@@ -27,13 +21,18 @@ namespace Core.Inspector
             base.OnInspectorGUI();
             serializedObject.Update();
 
-            SceneAsset newSceneAsset = EditorGUILayout.ObjectField(_sceneAsset, typeof(SceneAsset), true) as SceneAsset;
-
-            if (_sceneAsset != newSceneAsset)
+            SceneAsset sceneAsset = null;
+            if (!string.IsNullOrEmpty(_scenePathProperty.stringValue))
             {
-                _sceneAsset = newSceneAsset;
-                _sceneIdProperty.stringValue = _sceneAsset == null ? null : AssetDatabase.GUIDFromAssetPath(AssetDatabase.GetAssetPath(_sceneAsset)).ToString();
+                sceneAsset = AssetDatabase.LoadAssetAtPath<SceneAsset>(_scenePathProperty.stringValue);
+            }
 
+            EditorGUI.BeginChangeCheck();
+            sceneAsset = EditorGUILayout.ObjectField("Scene Asset", sceneAsset, typeof(SceneAsset), true) as SceneAsset;
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                _scenePathProperty.stringValue = sceneAsset == null ? null : AssetDatabase.GetAssetPath(sceneAsset);
                 serializedObject.ApplyModifiedProperties();
             }
         }

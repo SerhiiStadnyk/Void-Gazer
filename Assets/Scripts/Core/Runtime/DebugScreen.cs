@@ -35,14 +35,14 @@ namespace Core.Runtime
         private InputAction _cancelAction;
 
         private Instantiator _instantiator;
-        private AppTransitionHandler _appTransitionHandler;
+        private SceneTransitionHandler _sceneTransitionHandler;
 
 
         [Inject]
-        public void Inject(Instantiator instantiator, AppTransitionHandler appTransitionHandler)
+        public void Inject(Instantiator instantiator, SceneTransitionHandler sceneTransitionHandler)
         {
             _instantiator = instantiator;
-            _appTransitionHandler = appTransitionHandler;
+            _sceneTransitionHandler = sceneTransitionHandler;
         }
 
 
@@ -116,7 +116,7 @@ namespace Core.Runtime
 
         private void ChangeScene(SceneReference sceneReference)
         {
-            _appTransitionHandler.SwitchScene(sceneReference);
+            _sceneTransitionHandler.SwitchScene(sceneReference);
         }
 
 

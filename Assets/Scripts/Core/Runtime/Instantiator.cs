@@ -64,7 +64,7 @@ namespace Core.Runtime
 
         public void Dispose(GameObject obj)
         {
-            _sceneLifetimeHandler.DisposeObject(gameObject);
+            _sceneLifetimeHandler.DisposeObject(obj);
             Destroy(obj);
         }
     }

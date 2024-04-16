@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 361519936229138976}
   - component: {fileID: 4935103116029407619}
   m_Layer: 0
-  m_Name: GameTransitionHandler
+  m_Name: SceneTransitionHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad04a96c5c3268941951fc731d31c4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _appTransitionHandler: {fileID: 9162395045109138761}
+  _sceneTransitionHandler: {fileID: 9162395045109138761}
   _saveManager: {fileID: 650588217529326154}
   _sceneLifetimeHandler: {fileID: 6382627647307284170}
   _idManager: {fileID: 11400000, guid: 33118aa97e49a8d40a318c28a4862bef, type: 2}

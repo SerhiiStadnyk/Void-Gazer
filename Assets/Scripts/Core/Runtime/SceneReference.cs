@@ -9,8 +9,8 @@ namespace Core.Runtime
         //TODO: Add Scene groups
         [SerializeField]
         [ReadOnly]
-        private string _sceneId;
+        private string _scenePath;
 
-        public string SceneId => _sceneId;
+        public string ScenePath => _scenePath;
     }
 }

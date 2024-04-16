@@ -23,6 +23,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Forms
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 396bce5d2bdf73545b0ebfab579c6ee6
+    m_Address: Assets/Data/Game/Runtime/Assets/SceneRefs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Scenes
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d574b2fb4661c408f80aa76c0182931f
+    m_Address: Assets/Data/Game/Runtime/Scenes
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Scenes
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 04b4cdf226b69b541b05fe02fc9001e0, type: 2}
   m_SchemaSet:

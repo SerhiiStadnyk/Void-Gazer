@@ -1,5 +1,6 @@
 using Core.Runtime.Maps;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core.Runtime
@@ -7,7 +8,7 @@ namespace Core.Runtime
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField]
-        private AppTransitionHandler _appTransitionHandler;
+        private SceneTransitionHandler _sceneTransitionHandler;
 
         [SerializeField]
         private SaveManager _saveManager;
@@ -24,7 +25,7 @@ namespace Core.Runtime
 
         public override void InstallBindings()
         {
-            Container.BindInstance(_appTransitionHandler).AsSingle();
+            Container.BindInstance(_sceneTransitionHandler).AsSingle();
             Container.BindInstance(_saveManager).AsSingle();
             Container.BindInstance(_sceneLifetimeHandler).AsSingle();
             Container.BindInstance(_idManager).AsSingle();

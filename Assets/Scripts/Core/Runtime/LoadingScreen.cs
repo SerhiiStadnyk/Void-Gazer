@@ -19,11 +19,11 @@ namespace Core.Runtime
 
         private SaveManager _saveManager;
         private Core.Runtime.Instantiator _instantiator;
-        private AppTransitionHandler _transitionHandler;
+        private SceneTransitionHandler _transitionHandler;
 
 
         [Inject]
-        public void Inject(SaveManager saveManager, Core.Runtime.Instantiator instantiator, AppTransitionHandler transitionHandler)
+        public void Inject(SaveManager saveManager, Core.Runtime.Instantiator instantiator, SceneTransitionHandler transitionHandler)
         {
             _saveManager = saveManager;
             _instantiator = instantiator;
