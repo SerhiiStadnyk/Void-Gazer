@@ -8,13 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Modules/Game/Data/Runtime/Scenes/Scene_EntryPoint.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Data/Game/Runtime/Scenes/Scene_MainMenu.unity
     guid: 4a9a2c29241a62646897f531ca64b546
-  - enabled: 1
+  - enabled: 0
     path: Assets/Data/Game/Runtime/Scenes/Scene_Game.unity
     guid: b01a902a71a0c0f4d9025da106524606
-  - enabled: 1
+  - enabled: 0
     path: Assets/Data/Game/Runtime/Scenes/GameLocations/Scene_Game_Level_A.unity
     guid: bdeb390ef5d004e438f734713294806a
   m_configObjects:

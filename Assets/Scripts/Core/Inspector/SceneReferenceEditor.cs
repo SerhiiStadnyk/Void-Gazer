@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using Core.Runtime;
 using UnityEditor;
 
@@ -38,3 +40,5 @@ namespace Core.Inspector
         }
     }
 }
+
+#endif

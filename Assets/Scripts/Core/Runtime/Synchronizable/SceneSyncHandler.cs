@@ -10,6 +10,7 @@ namespace Core.Runtime.Synchronizable
     public class SceneSyncHandler : MonoBehaviour, ISynchronizable, IDisposable, ISceneObjectsInit
     {
         private SaveManager _saveManager;
+        private IdManager _idManager;
         private SceneLifetimeHandler _sceneLifetimeHandler;
 
         private Dictionary<string, ISynchronizable> _saveables;
@@ -23,10 +24,11 @@ namespace Core.Runtime.Synchronizable
 
 
         [Inject]
-        public void Inject(SaveManager saveManager, SceneLifetimeHandler sceneLifetimeHandler)
+        public void Inject(SaveManager saveManager, SceneLifetimeHandler sceneLifetimeHandler, IdManager idManager)
         {
             _saveManager = saveManager;
             _sceneLifetimeHandler = sceneLifetimeHandler;
+            _idManager = idManager;
         }
 
 
@@ -95,10 +97,11 @@ namespace Core.Runtime.Synchronizable
 
         void ISceneObjectsInit.DisposeObject(GameObject obj)
         {
-            ISynchronizable[] saveables = obj.GetComponentsInChildren<ISynchronizable>(true);
-            foreach (ISynchronizable saveable in saveables)
+            ISynchronizable[] synchronizables = obj.GetComponentsInChildren<ISynchronizable>(true);
+            foreach (ISynchronizable synchronizable in synchronizables)
             {
-                _saveables.Remove(saveable.InstanceId);
+                _saveables.Remove(synchronizable.InstanceId);
+                _idManager.RemoveDynamicGuid(synchronizable.InstanceId);
             }
         }
 

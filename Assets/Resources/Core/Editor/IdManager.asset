@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _staticGuidsList: []
   _dynamicGuidsList: []
+  _scenesLabel: Scenes
