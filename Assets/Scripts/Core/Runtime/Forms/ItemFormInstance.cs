@@ -28,7 +28,7 @@ namespace Core.Runtime.Forms
         {
             if (actor.ActorInventory.PickupItem(this))
             {
-                _instantiator.Dispose(this);
+                _instantiator.Dispose(gameObject);
             }
         }
 

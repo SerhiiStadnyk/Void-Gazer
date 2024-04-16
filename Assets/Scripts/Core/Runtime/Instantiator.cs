@@ -1,5 +1,4 @@
 using System;
-using Core.Runtime.Forms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -60,13 +59,6 @@ namespace Core.Runtime
             _sceneLifetimeHandler.InitObject(obj);
 
             return obj;
-        }
-
-
-        public void Dispose(BaseFormInstance formInstance)
-        {
-            _sceneLifetimeHandler.DisposeObject(formInstance.gameObject);
-            Destroy(formInstance.gameObject);
         }
 
 

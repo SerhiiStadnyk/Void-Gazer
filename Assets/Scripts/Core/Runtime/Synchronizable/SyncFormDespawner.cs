@@ -35,7 +35,7 @@ namespace Core.Runtime.Synchronizable
                     BaseFormInstance formToDispose = synchronizable.Value as BaseFormInstance;
                     if (formToDispose != null)
                     {
-                        _instantiator.Dispose(formToDispose);
+                        _instantiator.Dispose(formToDispose.gameObject);
                     }
                 }
             }

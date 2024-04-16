@@ -8,7 +8,7 @@ namespace Core.Runtime.Maps
     public class FormsCollection : MonoBehaviour
     {
         [SerializeField]
-        private string _formsAddressableLabel;
+        private string _formsAddressableLabel = "Forms";
 
         [SerializeField]
         private List<BaseFormMap> _formCollections;
